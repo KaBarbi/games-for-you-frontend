@@ -1,0 +1,80 @@
+<svg
+  viewBox="0 0 48 48"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <defs>
+    <filter id="neonGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur" />
+      <feMerge>
+        <feMergeNode in="coloredBlur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+    <filter id="strongGlow" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur" />
+      <feMerge>
+        <feMergeNode in="coloredBlur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+    <linearGradient id="cartridgeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="rgba(42,244,184,0.2)" />
+      <stop offset="50%" stop-color="rgba(42,244,184,0.4)" />
+      <stop offset="100%" stop-color="#2af4b8" />
+    </linearGradient>
+    <linearGradient id="labelGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="rgba(42,244,184,0.1)" />
+      <stop offset="100%" stop-color="rgba(42,244,184,0.3)" />
+    </linearGradient>
+  </defs>
+
+  <!-- Main cartridge body -->
+  <rect
+    x="8"
+    y="6"
+    width="32"
+    height="36"
+    rx="2"
+    fill="url(#cartridgeGradient)"
+    stroke="#2af4b8"
+    stroke-width="2"
+    filter="url(#strongGlow)"
+  />
+
+  <!-- Cartridge label area -->
+  <rect
+    x="12"
+    y="10"
+    width="24"
+    height="16"
+    rx="1"
+    fill="url(#labelGradient)"
+    stroke="#2af4b8"
+    stroke-width="1"
+    opacity="0.8"
+  />
+
+  <!-- Tech accent lines on label -->
+  <line x1="14" y1="14" x2="34" y2="14" stroke="#2af4b8" stroke-width="0.5" opacity="0.6" />
+  <line x1="14" y1="18" x2="30" y2="18" stroke="#2af4b8" stroke-width="0.5" opacity="0.6" />
+  <line x1="14" y1="22" x2="32" y2="22" stroke="#2af4b8" stroke-width="0.5" opacity="0.6" />
+
+  <!-- Connector pins at bottom -->
+  <rect x="12" y="34" width="2" height="6" fill="#2af4b8" opacity="0.9" filter="url(#neonGlow)" />
+  <rect x="16" y="34" width="2" height="6" fill="#2af4b8" opacity="0.9" filter="url(#neonGlow)" />
+  <rect x="20" y="34" width="2" height="6" fill="#2af4b8" opacity="0.9" filter="url(#neonGlow)" />
+  <rect x="24" y="34" width="2" height="6" fill="#2af4b8" opacity="0.9" filter="url(#neonGlow)" />
+  <rect x="28" y="34" width="2" height="6" fill="#2af4b8" opacity="0.9" filter="url(#neonGlow)" />
+  <rect x="32" y="34" width="2" height="6" fill="#2af4b8" opacity="0.9" filter="url(#neonGlow)" />
+
+  <!-- Corner tech indicators -->
+  <circle cx="12" cy="10" r="1" fill="#2af4b8" opacity="0.8" filter="url(#neonGlow)" />
+  <circle cx="36" cy="10" r="1" fill="#2af4b8" opacity="0.8" filter="url(#neonGlow)" />
+
+  <!-- Side grip notches -->
+  <rect x="6" y="16" width="2" height="4" fill="#2af4b8" opacity="0.6" />
+  <rect x="6" y="22" width="2" height="4" fill="#2af4b8" opacity="0.6" />
+  <rect x="40" y="16" width="2" height="4" fill="#2af4b8" opacity="0.6" />
+  <rect x="40" y="22" width="2" height="4" fill="#2af4b8" opacity="0.6" />
+</svg>

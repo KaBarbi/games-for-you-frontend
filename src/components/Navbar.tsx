@@ -12,7 +12,7 @@ const Menu: React.FC = () => {
                 <div className="logo">
                     <Link to="/" className="flex items-center gap-3">
                         <img
-                            src="/images/logoGFU.svg"
+                            src="/images/logog4u.svg"
                             alt="Logo"
                             className="h-12 max-h-14"
                         />

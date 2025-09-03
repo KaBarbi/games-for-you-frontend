@@ -21,7 +21,7 @@ const Register: React.FC = () => {
     }
 
     return (
-        <div className="min-h-screen flex items-center justify-center px-4">
+        <div className="min-h-screen flex items-center justify-center px-4 bg-[#000718]">
             <div className="w-full max-w-md bg-[#1a1a3a] p-8 rounded-xl shadow-lg">
                 <div className="flex flex-col items-center mb-6">
                     <MdAccountCircle size={60} className="text-cyan-400 mb-2" />

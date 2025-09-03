@@ -17,7 +17,7 @@ const Menu: React.FC = () => {
                             className="h-12 max-h-14"
                         />
                         <span
-                            style={{ color: "#2af4b8" }}
+                            style={{ color: "#22d3ee" }}
                             className="text-lg font-bold"
                         >
                             GamesForYou

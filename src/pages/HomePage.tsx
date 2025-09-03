@@ -1,5 +1,5 @@
-// src/pages/HomePage.tsx
 import React from "react"
+import { Link } from "react-router-dom"
 
 const HomePage: React.FC = () => {
     const categories = ["PlayStation", "Xbox", "Nintendo Switch"]
@@ -64,7 +64,7 @@ const HomePage: React.FC = () => {
             {/* Galeria de Jogos */}
             <section className="px-10 py-8 flex flex-col items-center">
                 <h2 className="text-2xl font-semibold mb-6 text-cyan-400">
-                    Destaques
+                    Highlights
                 </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 justify-center max-w-6xl">
                     {games.map((game) => (
@@ -77,16 +77,21 @@ const HomePage: React.FC = () => {
                                 alt={game.title}
                                 className="w-full h-48 object-cover"
                             />
-                            <div className="p-4">
+                            <div className="p-4 flex flex-col">
                                 <h3 className="text-lg font-bold mb-2">
                                     {game.title}
                                 </h3>
                                 <p className="text-cyan-400 font-semibold mb-3">
                                     R$ {game.price.toFixed(2)}
                                 </p>
-                                <button className="w-full py-2 bg-cyan-400 text-black font-bold rounded-lg hover:bg-cyan-300 transition">
-                                    View details
-                                </button>
+                                <Link
+                                    to={`/games/${game.id}`}
+                                    className="w-full"
+                                >
+                                    <button className="w-full py-2 bg-cyan-400 text-black font-bold rounded-lg hover:bg-cyan-300 transition">
+                                        View Details
+                                    </button>
+                                </Link>
                             </div>
                         </div>
                     ))}

@@ -82,7 +82,7 @@ const HomePage: React.FC = () => {
                                     {game.title}
                                 </h3>
                                 <p className="text-cyan-400 font-semibold mb-3">
-                                    R$ {game.price.toFixed(2)}
+                                    $ {game.price.toFixed(2)}
                                 </p>
                                 <Link
                                     to={`/games/${game.id}`}

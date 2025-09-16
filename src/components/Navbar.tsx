@@ -14,12 +14,14 @@ export function Navbar() {
         <nav className="bg-[#1b1f3b] text-white px-6 py-3 flex items-center justify-between">
             {/* Logo */}
             <div className="flex items-center gap-2 font-bold text-lg">
-                <img
-                    src="/images/logog4u.svg"
-                    alt="GamesForYou Logo"
-                    className="w-8 h-8 rounded-full object-cover"
-                />
-                GamesForYou
+                <a href="/" className="flex items-center gap-2">
+                    <img
+                        src="/images/logog4u.svg"
+                        alt="GamesForYou Logo"
+                        className="w-8 h-8 rounded-full object-cover"
+                    />
+                    GamesForYou
+                </a>
             </div>
 
             {/* Desktop Search Bar */}

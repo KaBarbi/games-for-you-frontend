@@ -1,63 +1,83 @@
 import React, { useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
-import { MdAccountCircle } from "react-icons/md"
 
-const Login: React.FC = () => {
-    const navigate = useNavigate()
+const App: React.FC = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    // const mainColor = "#22d3ee"
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleLogin = (e: React.FormEvent) => {
         e.preventDefault()
-        // Aqui você pode adicionar a lógica de autenticação
-        console.log("Email:", email, "Password:", password)
-        // Exemplo: navega para home após login
-        navigate("/")
+        console.log("Email:", email, "Senha:", password)
+        //API de login
     }
 
     return (
-        <div className="min-h-screen flex items-center justify-center px-4 bg-[#000718]">
-            <div className="w-full max-w-md bg-[#1a1a3a] p-8 rounded-xl shadow-lg">
-                <div className="flex flex-col items-center mb-6">
-                    <MdAccountCircle size={60} className="text-cyan-400 mb-2" />
-                    <h2 className="text-2xl font-bold text-white">Login</h2>
-                </div>
+        <div className="flex items-center justify-center min-h-screen bg-gray-100">
+            <div className="bg-white rounded-xl shadow-lg p-10 w-full max-w-md">
+                <div className="flex justify-center mb-6"></div>
 
-                <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-                    <input
-                        type="email"
-                        placeholder="Email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        className="px-4 py-2 rounded-lg bg-[#0f0f2f] text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-400 transition-shadow duration-300"
-                        required
-                    />
-                    <input
-                        type="password"
-                        placeholder="Senha"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        className="px-4 py-2 rounded-lg bg-[#0f0f2f] text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-400 transition-shadow duration-300"
-                        required
-                    />
-
+                <h1 className="text-2xl font-bold text-center mb-2">
+                    Welcome back
+                </h1>
+                <p className="text-gray-500 text-center mb-6">
+                    Log in to your account to continue shopping
+                </p>
+                <form onSubmit={handleLogin} className="space-y-4">
+                    <div>
+                        <label className="block text-gray-700 mb-1">
+                            Email
+                        </label>
+                        <input
+                            type="email"
+                            placeholder="seu@email.com"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-[#22d3ee]"
+                            required
+                        />
+                    </div>
+                    <div>
+                        <label className="block text-gray-700 mb-1">
+                            Password
+                        </label>
+                        <div className="relative">
+                            <input
+                                placeholder="Your Password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                className="w-full border border-gray-300 rounded-lg p-3 pr-10 focus:outline-none focus:ring-2 focus:ring-[#22d3ee]"
+                                required
+                            />
+                        </div>
+                    </div>
+                    <div className="flex items-center justify-between text-sm">
+                        <label className="flex items-center gap-2">
+                            <input
+                                type="checkbox"
+                                className="accent-[#22d3ee]"
+                            />
+                            Remember login
+                        </label>
+                        <a href="#" className="text-[#22d3ee] hover:underline">
+                            Forgot your password?
+                        </a>
+                    </div>
                     <button
                         type="submit"
-                        className="w-full py-2 bg-cyan-400 text-[#0f0f2f] font-semibold rounded-lg hover:bg-cyan-500 transition-colors duration-300 mt-2"
+                        className="w-full bg-[#22d3ee] text-white p-3 rounded-lg font-semibold hover:brightness-105 transition"
                     >
-                        Continue
+                        Confirm
                     </button>
                 </form>
-
-                <p className="text-gray-400 mt-4 text-center text-sm">
-                    Don't have an account?{" "}
-                    <Link to="/register" className="text-cyan-400 hover:underline">
-                         Sign up
-                    </Link>
+                <p className="text-center text-sm text-gray-500 mt-4">
+                    Dont have an account?{" "}
+                    <a href="/register" className="text-[#22d3ee] hover:underline">
+                        Sign up here
+                    </a>
                 </p>
             </div>
         </div>
     )
 }
 
-export default Login
+export default App

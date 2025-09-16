@@ -1,80 +1,93 @@
 import React, { useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
-import { MdAccountCircle } from "react-icons/md"
 
 const Register: React.FC = () => {
-    const navigate = useNavigate()
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleRegister = (e: React.FormEvent) => {
         e.preventDefault()
         if (password !== confirmPassword) {
-            alert("As senhas não coincidem!")
+            alert("Passwords do not match!")
             return
         }
-        // Aqui você pode adicionar a lógica de cadastro
-        console.log("Name:", name, "Email:", email, "Password:", password)
-        navigate("/login") // redireciona para login após cadastro
+        console.log("Nome:", name, "Email:", email, "Senha:", password)
+        // Aqui você chamaria a API de registro
     }
 
     return (
-        <div className="min-h-screen flex items-center justify-center px-4 bg-[#000718]">
-            <div className="w-full max-w-md bg-[#1a1a3a] p-8 rounded-xl shadow-lg">
-                <div className="flex flex-col items-center mb-6">
-                    <MdAccountCircle size={60} className="text-cyan-400 mb-2" />
-                    <h2 className="text-2xl font-bold text-white">Sign up</h2>
-                </div>
-
-                <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-                    <input
-                        type="text"
-                        placeholder="Name"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        className="px-4 py-2 rounded-lg bg-[#0f0f2f] text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-400 transition-shadow duration-300"
-                        required
-                    />
-                    <input
-                        type="email"
-                        placeholder="Email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        className="px-4 py-2 rounded-lg bg-[#0f0f2f] text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-400 transition-shadow duration-300"
-                        required
-                    />
-                    <input
-                        type="password"
-                        placeholder="Password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        className="px-4 py-2 rounded-lg bg-[#0f0f2f] text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-400 transition-shadow duration-300"
-                        required
-                    />
-                    <input
-                        type="password"
-                        placeholder="Confirm Password"
-                        value={confirmPassword}
-                        onChange={(e) => setConfirmPassword(e.target.value)}
-                        className="px-4 py-2 rounded-lg bg-[#0f0f2f] text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-400 transition-shadow duration-300"
-                        required
-                    />
-
+        <div className="flex items-center justify-center min-h-screen bg-gray-100">
+            <div className="bg-white rounded-xl shadow-lg p-10 w-full max-w-md">
+                <h1 className="text-2xl font-bold text-center mb-2">
+                    Create Account
+                </h1>
+                <p className="text-gray-500 text-center mb-6">
+                    Fill in the details to create your account
+                </p>
+                <form onSubmit={handleRegister} className="space-y-4">
+                    <div>
+                        <label className="block text-gray-700 mb-1">Name</label>
+                        <input
+                            type="text"
+                            placeholder="Seu nome"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-[#22d3ee]"
+                            required
+                        />
+                    </div>
+                    <div>
+                        <label className="block text-gray-700 mb-1">
+                            Email
+                        </label>
+                        <input
+                            type="email"
+                            placeholder="seu@email.com"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-[#22d3ee]"
+                            required
+                        />
+                    </div>
+                    <div>
+                        <label className="block text-gray-700 mb-1">
+                            Password
+                        </label>
+                        <input
+                            type="password"
+                            placeholder="Sua senha"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-[#22d3ee]"
+                            required
+                        />
+                    </div>
+                    <div>
+                        <label className="block text-gray-700 mb-1">
+                            Confirm Password
+                        </label>
+                        <input
+                            type="password"
+                            placeholder="Confirme sua senha"
+                            value={confirmPassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
+                            className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-[#22d3ee]"
+                            required
+                        />
+                    </div>
                     <button
                         type="submit"
-                        className="w-full py-2 bg-cyan-400 text-[#0f0f2f] font-semibold rounded-lg hover:bg-cyan-500 transition-colors duration-300 mt-2"
+                        className="w-full bg-[#22d3ee] text-white p-3 rounded-lg font-semibold hover:brightness-105 transition"
                     >
-                        Submit
+                        Register
                     </button>
                 </form>
-
-                <p className="text-gray-400 mt-4 text-center text-sm">
+                <p className="text-center text-sm text-gray-500 mt-4">
                     Already have an account?{" "}
-                    <Link to="/login" className="text-cyan-400 hover:underline">
-                        Sign up
-                    </Link>
+                    <a href="/login" className="text-[#22d3ee] hover:underline">
+                        Log in here
+                    </a>
                 </p>
             </div>
         </div>

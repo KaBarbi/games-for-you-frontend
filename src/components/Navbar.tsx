@@ -55,7 +55,7 @@ export function Navbar() {
                 <Link to="/cart" className="relative hover:text-[#22d3ee]">
                     <ShoppingCart size={20} />
                 </Link>
-                <Link to="/profile" className="hover:text-[#22d3ee]">
+                <Link to="/login" className="hover:text-[#22d3ee]">
                     <User size={20} />
                 </Link>
             </div>

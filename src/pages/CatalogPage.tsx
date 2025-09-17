@@ -1,4 +1,3 @@
-// src/components/GameFilterCard.tsx
 import React, { useState } from "react"
 
 interface GameFilterProps {

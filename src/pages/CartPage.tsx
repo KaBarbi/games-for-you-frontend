@@ -1,5 +1,5 @@
 import React from "react"
-import { FaArrowLeft } from "react-icons/fa" // ícone de seta
+import { FaArrowLeft } from "react-icons/fa" 
 
 const EmptyCart: React.FC = () => {
     return (

@@ -13,7 +13,7 @@ const Register: React.FC = () => {
             return
         }
         console.log("Nome:", name, "Email:", email, "Senha:", password)
-        // Aqui você chamaria a API de registro
+        // API de registro
     }
 
     return (

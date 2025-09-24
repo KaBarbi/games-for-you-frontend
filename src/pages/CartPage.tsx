@@ -1,5 +1,5 @@
 import React from "react"
-import { FaArrowLeft } from "react-icons/fa" 
+import { FaArrowLeft } from "react-icons/fa"
 
 const EmptyCart: React.FC = () => {
     return (
@@ -15,7 +15,7 @@ const EmptyCart: React.FC = () => {
 
                 <a
                     href="/catalog"
-                    className="bg-teal-400 hover:22d3ee text-black font-semibold px-6 py-3 rounded-lg transition"
+                    className="bg-[#22d3ee] hover:bg-[#1fb8d3] text-black font-semibold px-6 py-3 rounded-lg transition"
                 >
                     Explore Catalog
                 </a>

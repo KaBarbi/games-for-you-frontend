@@ -4,13 +4,13 @@ import { mockGames } from "../data/mockGames"
 const HomePage = () => {
     return (
         <div className="bg-[#f9f9fb] min-h-screen">
-            {/* Banner no topo */}
+            {/* Banner */}
             <GameBanner />
 
-            {/* Seção de destaques */}
+            {/* Featured Products */}
             <section className="py-12 px-6">
                 <h2 className="text-3xl font-bold mb-8 text-center text-[#0f0f2f]">
-                    Destaques
+                    Featured Products
                 </h2>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
@@ -35,7 +35,7 @@ const HomePage = () => {
                                     R$ {game.price.toFixed(2)}
                                 </p>
                                 <button className="mt-3 w-full bg-[#22d3ee] text-white py-2 rounded-lg font-medium hover:bg-[#1fb8d3] transition-colors duration-300 cursor-pointer">
-                                    Adicionar ao carrinho
+                                    Add to cart
                                 </button>
                             </div>
                         </div>

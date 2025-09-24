@@ -30,7 +30,7 @@ const CatalogPage: React.FC = () => {
                 {/* Campo de busca */}
                 <input
                     type="text"
-                    placeholder="Buscar jogos..."
+                    placeholder="Search Games..."
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
                     className="w-full p-3 border border-gray-300 rounded-md mb-6 focus:outline-none focus:ring-2 focus:ring-[#22d3ee]"
@@ -39,7 +39,7 @@ const CatalogPage: React.FC = () => {
                 {/* Filtros e ordenação */}
                 <div className="flex flex-col md:flex-row justify-between gap-4">
                     <div className="flex gap-2 flex-wrap">
-                        <span className="font-semibold mr-2">Plataforma:</span>
+                        <span className="font-semibold mr-2">Platform:</span>
                         {["All", "PlayStation", "Xbox", "Nintendo Switch"].map(
                             (platform) => (
                                 <button
@@ -60,7 +60,7 @@ const CatalogPage: React.FC = () => {
                     </div>
 
                     <div className="flex gap-2 flex-wrap">
-                        <span className="font-semibold mr-2">Ordenar por:</span>
+                        <span className="font-semibold mr-2">Sort by:</span>
                         {["Name", "Lowest Price", "Highest Price"].map(
                             (option) => (
                                 <button
@@ -103,7 +103,7 @@ const CatalogPage: React.FC = () => {
                                 R$ {game.price.toFixed(2)}
                             </p>
                             <button className="mt-3 w-full bg-[#22d3ee] text-white py-2 rounded-lg font-medium hover:bg-[#1fb8d3] transition-colors duration-300 cursor-pointer">
-                                Adicionar ao carrinho
+                                Add to cart
                             </button>
                         </div>
                     </div>

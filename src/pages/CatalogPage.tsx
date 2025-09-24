@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import { mockGames } from "../data/mockGames"
 
 const CatalogPage: React.FC = () => {
     const [search, setSearch] = useState("")
@@ -9,40 +10,36 @@ const CatalogPage: React.FC = () => {
         "Name"
     )
 
-    const games = [
-        { id: 1, name: "Game A", platform: "PlayStation", price: 50 },
-        { id: 2, name: "Game B", platform: "Xbox", price: 30 },
-        { id: 3, name: "Game C", platform: "Nintendo Switch", price: 70 },
-    ]
-
-    const filteredGames = games
+    const filteredGames = mockGames
         .filter(
             (game) =>
-                game.name.toLowerCase().includes(search.toLowerCase()) &&
+                game.title.toLowerCase().includes(search.toLowerCase()) &&
                 (platformFilter === "All" || game.platform === platformFilter)
         )
         .sort((a, b) => {
-            if (sort === "Name") return a.name.localeCompare(b.name)
+            if (sort === "Name") return a.title.localeCompare(b.title)
             if (sort === "Lowest Price") return a.price - b.price
             if (sort === "Highest Price") return b.price - a.price
             return 0
         })
 
     return (
-        <div className="max-w-4xl mx-auto p-6">
+        <div className="bg-[#f9f9fb] min-h-screen py-12 px-6">
             {/* Filtros */}
-            <div className="p-6 bg-white shadow-lg rounded-xl mb-6">
+            <div className="max-w-6xl mx-auto p-6 bg-white shadow-lg rounded-xl mb-10">
+                {/* Campo de busca */}
                 <input
                     type="text"
-                    placeholder="Search games..."
+                    placeholder="Buscar jogos..."
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
-                    className="w-full p-3 border border-gray-300 rounded-md mb-4 focus:outline-none focus:ring-2 focus:ring-[#22d3ee]"
+                    className="w-full p-3 border border-gray-300 rounded-md mb-6 focus:outline-none focus:ring-2 focus:ring-[#22d3ee]"
                 />
 
-                <div className="flex flex-wrap justify-between mb-4">
-                    <div className="flex gap-2 mb-2 flex-wrap">
-                        <span className="font-semibold mr-2">Platform:</span>
+                {/* Filtros e ordenação */}
+                <div className="flex flex-col md:flex-row justify-between gap-4">
+                    <div className="flex gap-2 flex-wrap">
+                        <span className="font-semibold mr-2">Plataforma:</span>
                         {["All", "PlayStation", "Xbox", "Nintendo Switch"].map(
                             (platform) => (
                                 <button
@@ -50,10 +47,10 @@ const CatalogPage: React.FC = () => {
                                     onClick={() =>
                                         setPlatformFilter(platform as any)
                                     }
-                                    className={`px-4 py-2 rounded-md font-medium ${
+                                    className={`px-4 py-2 rounded-md font-medium transition-colors ${
                                         platformFilter === platform
                                             ? "bg-[#22d3ee] text-black"
-                                            : "bg-gray-100 text-gray-700"
+                                            : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                                     }`}
                                 >
                                     {platform}
@@ -62,17 +59,17 @@ const CatalogPage: React.FC = () => {
                         )}
                     </div>
 
-                    <div className="flex gap-2 mb-2 flex-wrap">
-                        <span className="font-semibold mr-2">Sort by:</span>
+                    <div className="flex gap-2 flex-wrap">
+                        <span className="font-semibold mr-2">Ordenar por:</span>
                         {["Name", "Lowest Price", "Highest Price"].map(
                             (option) => (
                                 <button
                                     key={option}
                                     onClick={() => setSort(option as any)}
-                                    className={`px-4 py-2 rounded-md font-medium ${
+                                    className={`px-4 py-2 rounded-md font-medium transition-colors ${
                                         sort === option
                                             ? "bg-[#22d3ee] text-black"
-                                            : "bg-gray-100 text-gray-700"
+                                            : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                                     }`}
                                 >
                                     {option}
@@ -83,18 +80,32 @@ const CatalogPage: React.FC = () => {
                 </div>
             </div>
 
-            {/* Lista de jogos */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            {/* Lista de Jogos */}
+            <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
                 {filteredGames.map((game) => (
                     <div
                         key={game.id}
-                        className="p-4 bg-white shadow-md rounded-lg"
+                        className="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden"
                     >
-                        <h3 className="font-bold">{game.name}</h3>
-                        <p>{game.platform}</p>
-                        <p className="text-teal-600 font-semibold">
-                            ${game.price}
-                        </p>
+                        <img
+                            src={game.image}
+                            alt={game.title}
+                            className="w-full h-48 object-cover"
+                        />
+                        <div className="p-4">
+                            <h3 className="text-lg font-semibold text-gray-900">
+                                {game.title}
+                            </h3>
+                            <p className="text-sm text-gray-600">
+                                {game.platform}
+                            </p>
+                            <p className="text-[#12a176] font-bold mt-2">
+                                R$ {game.price.toFixed(2)}
+                            </p>
+                            <button className="mt-3 w-full bg-[#22d3ee] text-white py-2 rounded-lg font-medium hover:bg-[#1fb8d3] transition-colors duration-300 cursor-pointer">
+                                Adicionar ao carrinho
+                            </button>
+                        </div>
                     </div>
                 ))}
             </div>

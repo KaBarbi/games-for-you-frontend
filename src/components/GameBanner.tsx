@@ -1,4 +1,3 @@
-// src/components/GameBanner.tsx
 import React from "react"
 
 const GameBanner: React.FC = () => {

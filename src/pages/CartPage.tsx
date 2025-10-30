@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FaTrashAlt } from "react-icons/fa";
 import EmptyCart from "./EmptyCart";
 
-const Cart: React.FC = () => {
+const CartPage: React.FC = () => {
   const [cartItems, setCartItems] = useState([
     {
       id: 1,
@@ -47,7 +47,9 @@ const Cart: React.FC = () => {
     setCartItems((prev) => prev.filter((item) => item.id !== id));
   };
 
-  if (cartItems.length === 0) return <EmptyCart />;
+  if (cartItems.length === 0) {
+    return <EmptyCart />;
+  }
 
   return (
     <div className="min-h-screen bg-[#f5f5f5] text-black flex flex-col items-center pt-10 px-4">
@@ -113,4 +115,4 @@ const Cart: React.FC = () => {
   );
 };
 
-export default Cart;
+export default CartPage;

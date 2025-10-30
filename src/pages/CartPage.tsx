@@ -24,8 +24,31 @@ const EmptyCart: React.FC = () => {
                     Back to Home
                 </a>
             </div>
-        </div>
-    )
-}
 
-export default EmptyCart
+            <button
+              onClick={() => removeItem(item.id)}
+              className="text-red-500 hover:text-red-400"
+            >
+              <FaTrashAlt size={20} />
+            </button>
+          </div>
+        ))}
+      </div>
+
+      <div className="w-full max-w-3xl mt-6 bg-white p-6 rounded-2xl shadow-lg">
+        <div className="flex justify-between items-center">
+          <span className="text-lg font-semibold">Total:</span>
+          <span className="text-2xl text-teal-400 font-bold">
+            R$ {total.toFixed(2)}
+          </span>
+        </div>
+
+        <button className="w-full mt-6 bg-[#22d3ee] text-black font-semibold py-3 rounded-xl hover:opacity-90 transition-all">
+          Checkout
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default Cart;

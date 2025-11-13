@@ -3,6 +3,7 @@ import GameBanner from "../components/GameBanner";
 import { fetchData } from "../services/api"; // supondo que esse código está em src/services/api.ts
 
 type Game = {
+  platform_display: string;
   id: number;
   title: string;
   price: number;
@@ -62,9 +63,11 @@ const HomePage = () => {
                   <h3 className="text-lg font-semibold text-gray-900">
                     {game.title}
                   </h3>
-                  <p className="text-sm text-gray-600">{game.platform}</p>
+                  <p className="text-sm text-gray-600">
+                    {game.platform_display}
+                  </p>
                   <p className="text-[#12a176] font-bold mt-2">
-                    R$ {Number(game.price).toFixed(2)}
+                    $ {Number(game.price).toFixed(2)}
                   </p>
                   <button className="mt-3 w-full bg-[#22d3ee] text-white py-2 rounded-lg font-medium hover:bg-[#1fb8d3] transition-colors duration-300 cursor-pointer">
                     Add to cart

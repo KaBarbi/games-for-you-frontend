@@ -9,6 +9,7 @@ type Game = {
   price: number;
   platform: string;
   image: string;
+  cover: string;
 };
 
 const HomePage = () => {
@@ -55,7 +56,7 @@ const HomePage = () => {
                 className="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden"
               >
                 <img
-                  src={game.image}
+                  src={game.cover}
                   alt={game.title}
                   className="w-full h-48 object-cover"
                 />

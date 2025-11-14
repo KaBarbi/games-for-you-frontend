@@ -20,7 +20,6 @@ const CatalogPage: React.FC = () => {
     "Name"
   );
 
-  // Load from API exactly como HomePage
   useEffect(() => {
     const loadGames = async () => {
       try {
@@ -51,7 +50,6 @@ const CatalogPage: React.FC = () => {
 
   return (
     <div className="bg-[#f9f9fb] min-h-screen py-12 px-6">
-      {/* Search and filters */}
       <div className="max-w-6xl mx-auto p-6 bg-white shadow-lg rounded-xl mb-10">
         <input
           type="text"
@@ -62,7 +60,6 @@ const CatalogPage: React.FC = () => {
         />
 
         <div className="flex flex-col md:flex-row justify-between gap-4">
-          {/* Platform Filter */}
           <div className="flex gap-2 flex-wrap">
             <span className="font-semibold mr-2">Platform:</span>
             {["All", "PlayStation", "Xbox", "Nintendo Switch"].map(
@@ -82,7 +79,6 @@ const CatalogPage: React.FC = () => {
             )}
           </div>
 
-          {/* Sort */}
           <div className="flex gap-2 flex-wrap">
             <span className="font-semibold mr-2">Sort by:</span>
             {["Name", "Lowest Price", "Highest Price"].map((option) => (
@@ -102,7 +98,6 @@ const CatalogPage: React.FC = () => {
         </div>
       </div>
 
-      {/* Game List */}
       <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
         {filteredGames.map((game) => (
           <div

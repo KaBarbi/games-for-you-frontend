@@ -8,7 +8,6 @@ type Game = {
   title: string;
   price: number;
   platform: string;
-  image: string;
   cover: string;
 };
 
@@ -20,9 +19,9 @@ const HomePage = () => {
   useEffect(() => {
     const loadGames = async () => {
       try {
-        const res = await api.get("games/");
-        const data = res.data;
-        setGames(data);
+        const res = await api.get("games/"); // usa baseURL
+        setGames(res.data);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (err) {
         setError("Failed to load games 😕");
       } finally {

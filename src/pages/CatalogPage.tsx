@@ -20,15 +20,20 @@ const CatalogPage: React.FC = () => {
     "Name"
   );
 
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
   useEffect(() => {
     const loadGames = async () => {
       try {
         const res = await api.get("games/");
-        const data = res.data;
-        setGames(Array.isArray(data) ? data : []);
-      } catch (error) {
-        console.error("Failed to load games:", error);
+        setGames(Array.isArray(res.data) ? res.data : []);
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      } catch (err) {
+        setError("Failed to load games 😕");
         setGames([]);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -98,32 +103,42 @@ const CatalogPage: React.FC = () => {
         </div>
       </div>
 
-      <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-        {filteredGames.map((game) => (
-          <div
-            key={game.id}
-            className="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden"
-          >
-            <img
-              src={game.cover}
-              alt={game.title}
-              className="w-full h-48 object-cover"
-            />
-            <div className="p-4">
-              <h3 className="text-lg font-semibold text-gray-900">
-                {game.title}
-              </h3>
-              <p className="text-sm text-gray-600">{game.platform_display}</p>
-              <p className="text-[#12a176] font-bold mt-2">
-                $ {Number(game.price).toFixed(2)}
-              </p>
-              <button className="mt-3 w-full bg-[#22d3ee] text-white py-2 rounded-lg font-medium hover:bg-[#1fb8d3] transition-colors">
-                Add to cart
-              </button>
+      {/* --- loading / error como na Home --- */}
+      {loading && (
+        <p className="text-center text-gray-500 text-lg">Loading games...</p>
+      )}
+
+      {error && <p className="text-center text-red-500 text-lg">{error}</p>}
+      {/* -------------------------------------- */}
+
+      {!loading && !error && (
+        <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+          {filteredGames.map((game) => (
+            <div
+              key={game.id}
+              className="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden"
+            >
+              <img
+                src={game.cover}
+                alt={game.title}
+                className="w-full h-48 object-cover"
+              />
+              <div className="p-4">
+                <h3 className="text-lg font-semibold text-gray-900">
+                  {game.title}
+                </h3>
+                <p className="text-sm text-gray-600">{game.platform_display}</p>
+                <p className="text-[#12a176] font-bold mt-2">
+                  $ {Number(game.price).toFixed(2)}
+                </p>
+                <button className="mt-3 w-full bg-[#22d3ee] text-white py-2 rounded-lg font-medium hover:bg-[#1fb8d3] transition-colors">
+                  Add to cart
+                </button>
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

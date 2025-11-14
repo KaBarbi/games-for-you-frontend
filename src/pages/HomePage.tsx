@@ -21,7 +21,7 @@ const HomePage = () => {
       try {
         const res = await api.get("games/"); // usa baseURL
         setGames(res.data);
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (err) {
         setError("Failed to load games 😕");
       } finally {

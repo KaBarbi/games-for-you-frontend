@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import GameBanner from "../components/GameBanner";
-import { fetchData } from "../services/api"; // supondo que esse código está em src/services/api.ts
+import { api } from "../services/api";
 
 type Game = {
   platform_display: string;
@@ -20,7 +20,8 @@ const HomePage = () => {
   useEffect(() => {
     const loadGames = async () => {
       try {
-        const data = await fetchData("/games/");
+        const res = await api.get("games/");
+        const data = res.data;
         setGames(data);
       } catch (err) {
         setError("Failed to load games 😕");
@@ -34,10 +35,8 @@ const HomePage = () => {
 
   return (
     <div className="bg-[#f9f9fb] min-h-screen">
-      {/* Banner */}
       <GameBanner />
 
-      {/* Featured Products */}
       <section className="py-12 px-6">
         <h2 className="text-3xl font-bold mb-8 text-center text-[#0f0f2f]">
           Featured Products

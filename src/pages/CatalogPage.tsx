@@ -1,20 +1,46 @@
-import React, { useState } from "react"
-import { mockGames } from "../data/mockGames"
+import React, { useState, useEffect } from "react"
+import { fetchData } from "../services/api"
+
+type Game = {
+    id: number
+    title: string
+    price: number
+    platform: string
+    platform_display: string
+    cover: string
+}
 
 const CatalogPage: React.FC = () => {
+    const [games, setGames] = useState<Game[]>([])
     const [search, setSearch] = useState("")
     const [platformFilter, setPlatformFilter] = useState<
         "All" | "PlayStation" | "Xbox" | "Nintendo Switch"
     >("All")
-    const [sort, setSort] = useState<"Name" | "Lowest Price" | "Highest Price">(
-        "Name"
-    )
+    const [sort, setSort] = useState<
+        "Name" | "Lowest Price" | "Highest Price"
+    >("Name")
 
-    const filteredGames = mockGames
+    // Load from API exactly como HomePage
+    useEffect(() => {
+        const loadGames = async () => {
+            try {
+                const data = await fetchData("/games/")
+                setGames(Array.isArray(data) ? data : [])
+            } catch (error) {
+                console.error("Failed to load games:", error)
+                setGames([])
+            }
+        }
+
+        loadGames()
+    }, [])
+
+    const filteredGames = games
         .filter(
             (game) =>
                 game.title.toLowerCase().includes(search.toLowerCase()) &&
-                (platformFilter === "All" || game.platform === platformFilter)
+                (platformFilter === "All" ||
+                    game.platform_display === platformFilter)
         )
         .sort((a, b) => {
             if (sort === "Name") return a.title.localeCompare(b.title)
@@ -25,9 +51,8 @@ const CatalogPage: React.FC = () => {
 
     return (
         <div className="bg-[#f9f9fb] min-h-screen py-12 px-6">
-            {/* Filtros */}
+            {/* Search and filters */}
             <div className="max-w-6xl mx-auto p-6 bg-white shadow-lg rounded-xl mb-10">
-                {/* Campo de busca */}
                 <input
                     type="text"
                     placeholder="Search Games..."
@@ -36,8 +61,8 @@ const CatalogPage: React.FC = () => {
                     className="w-full p-3 border border-gray-300 rounded-md mb-6 focus:outline-none focus:ring-2 focus:ring-[#22d3ee]"
                 />
 
-                {/* Filtros e ordenação */}
                 <div className="flex flex-col md:flex-row justify-between gap-4">
+                    {/* Platform Filter */}
                     <div className="flex gap-2 flex-wrap">
                         <span className="font-semibold mr-2">Platform:</span>
                         {["All", "PlayStation", "Xbox", "Nintendo Switch"].map(
@@ -45,7 +70,7 @@ const CatalogPage: React.FC = () => {
                                 <button
                                     key={platform}
                                     onClick={() =>
-                                        setPlatformFilter(platform as any)
+                                        setPlatformFilter(platform as never)
                                     }
                                     className={`px-4 py-2 rounded-md font-medium transition-colors ${
                                         platformFilter === platform
@@ -59,13 +84,14 @@ const CatalogPage: React.FC = () => {
                         )}
                     </div>
 
+                    {/* Sort */}
                     <div className="flex gap-2 flex-wrap">
                         <span className="font-semibold mr-2">Sort by:</span>
                         {["Name", "Lowest Price", "Highest Price"].map(
                             (option) => (
                                 <button
                                     key={option}
-                                    onClick={() => setSort(option as any)}
+                                    onClick={() => setSort(option as never)}
                                     className={`px-4 py-2 rounded-md font-medium transition-colors ${
                                         sort === option
                                             ? "bg-[#22d3ee] text-black"
@@ -80,7 +106,7 @@ const CatalogPage: React.FC = () => {
                 </div>
             </div>
 
-            {/* Lista de Jogos */}
+            {/* Game List */}
             <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
                 {filteredGames.map((game) => (
                     <div
@@ -88,7 +114,7 @@ const CatalogPage: React.FC = () => {
                         className="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden"
                     >
                         <img
-                            src={game.image}
+                            src={game.cover}
                             alt={game.title}
                             className="w-full h-48 object-cover"
                         />
@@ -97,12 +123,12 @@ const CatalogPage: React.FC = () => {
                                 {game.title}
                             </h3>
                             <p className="text-sm text-gray-600">
-                                {game.platform}
+                                {game.platform_display}
                             </p>
                             <p className="text-[#12a176] font-bold mt-2">
-                                R$ {game.price.toFixed(2)}
+                                $ {Number(game.price).toFixed(2)}
                             </p>
-                            <button className="mt-3 w-full bg-[#22d3ee] text-white py-2 rounded-lg font-medium hover:bg-[#1fb8d3] transition-colors duration-300 cursor-pointer">
+                            <button className="mt-3 w-full bg-[#22d3ee] text-white py-2 rounded-lg font-medium hover:bg-[#1fb8d3] transition-colors">
                                 Add to cart
                             </button>
                         </div>

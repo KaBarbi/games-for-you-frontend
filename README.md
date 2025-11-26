@@ -1,7 +1,13 @@
 # 🎮 Game E-commerce - Frontend
 
+(The project is still in development.)
+
 This is the **frontend** of the **Game E-commerce Project**, built with **React + Vite**.  
 The application aims to provide a modern, responsive, and smooth experience for purchasing digital games, integrating with a **Django REST Framework** backend.
+
+Server - (https://github.com/KaBarbi/games-for-you-server)
+
+Live demo - (https://games-for-you.onrender.com)
 
 ---
 

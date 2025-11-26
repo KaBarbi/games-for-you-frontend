@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect, useState } from "react";
 import GameBanner from "../components/GameBanner";
 import { api } from "../services/api";
@@ -16,12 +17,20 @@ const HomePage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  // ids of the games you want to feature
+  const FEATURED_IDS = [2, 7, 3, 9];
+
   useEffect(() => {
     const loadGames = async () => {
       try {
         const res = await api.get("games/");
-        setGames(res.data);
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
+        // filtra só os que você quer mostrar
+        const filtered = res.data.filter((game: Game) =>
+          FEATURED_IDS.includes(game.id)
+        );
+
+        setGames(filtered);
       } catch (err) {
         setError("Failed to load games 😕");
       } finally {

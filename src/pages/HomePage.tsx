@@ -19,7 +19,7 @@ const HomePage = () => {
   useEffect(() => {
     const loadGames = async () => {
       try {
-        const res = await api.get("games/"); // usa baseURL
+        const res = await api.get("games/");
         setGames(res.data);
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (err) {
@@ -48,32 +48,39 @@ const HomePage = () => {
 
         {!loading && !error && (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
-            {games.map((game) => (
-              <div
-                key={game.id}
-                className="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden"
-              >
-                <img
-                  src={game.cover}
-                  alt={game.title}
-                  className="w-full h-48 object-cover"
-                />
-                <div className="p-4">
-                  <h3 className="text-lg font-semibold text-gray-900">
-                    {game.title}
-                  </h3>
-                  <p className="text-sm text-gray-600">
-                    {game.platform_display}
-                  </p>
-                  <p className="text-[#12a176] font-bold mt-2">
-                    $ {Number(game.price).toFixed(2)}
-                  </p>
-                  <button className="mt-3 w-full bg-[#22d3ee] text-white py-2 rounded-lg font-medium hover:bg-[#1fb8d3] transition-colors duration-300 cursor-pointer">
-                    Add to cart
-                  </button>
+            {games.map((game) => {
+              const coverSrc = new URL(
+                `../assets/covers/${game.cover}`,
+                import.meta.url
+              ).href;
+
+              return (
+                <div
+                  key={game.id}
+                  className="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden"
+                >
+                  <img
+                    src={coverSrc}
+                    alt={game.title}
+                    className="w-full h-48 object-cover"
+                  />
+                  <div className="p-4">
+                    <h3 className="text-lg font-semibold text-gray-900">
+                      {game.title}
+                    </h3>
+                    <p className="text-sm text-gray-600">
+                      {game.platform_display}
+                    </p>
+                    <p className="text-[#12a176] font-bold mt-2">
+                      $ {Number(game.price).toFixed(2)}
+                    </p>
+                    <button className="mt-3 w-full bg-[#22d3ee] text-white py-2 rounded-lg font-medium hover:bg-[#1fb8d3] transition-colors duration-300 cursor-pointer">
+                      Add to cart
+                    </button>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
       </section>

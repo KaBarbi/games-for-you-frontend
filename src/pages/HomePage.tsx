@@ -19,7 +19,7 @@ const HomePage = () => {
   const [error, setError] = useState<string | null>(null);
 
   // ids of the games you want to feature
-  const FEATURED_IDS = [2, 7, 3, 9];
+  const FEATURED_IDS = [2, 7, 11, 9];
 
   useEffect(() => {
     const loadGames = async () => {

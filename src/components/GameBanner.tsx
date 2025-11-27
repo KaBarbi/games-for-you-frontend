@@ -18,28 +18,6 @@ const GameBanner: React.FC = () => {
         delivery.
       </p>
 
-      {/* Filter buttons */}
-      <div className="mt-6 flex gap-4 flex-wrap justify-center">
-        <Link
-          to="/catalog?platform=playstation"
-          className="px-4 py-2 border border-gray-500 rounded-lg hover:bg-gray-700 transition"
-        >
-          PlayStation
-        </Link>
-        <Link
-          to="/catalog?platform=xbox"
-          className="px-4 py-2 border border-gray-500 rounded-lg hover:bg-gray-700 transition"
-        >
-          Xbox
-        </Link>
-        <Link
-          to="/catalog?platform=nintendo-switch"
-          className="px-4 py-2 border border-gray-500 rounded-lg hover:bg-gray-700 transition"
-        >
-          Nintendo Switch
-        </Link>
-      </div>
-
       {/* Main buttons */}
       <div className="mt-8 flex gap-4">
         <Link

@@ -7,10 +7,12 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import CatalogPage from "./pages/CatalogPage";
 import Footer from "./components/Footer";
+import ConstructionAlert from "./components/ConstructionAlert";
 
 export default function App() {
   return (
     <Router>
+      <ConstructionAlert />
       <Navbar />
       <Routes>
         <Route path="/" element={<HomePage />} />

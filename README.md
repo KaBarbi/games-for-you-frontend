@@ -1,4 +1,4 @@
-# 🎮 Game E-commerce - Frontend
+# Game E-commerce - Frontend
 
 (The project is still in development.)
 
@@ -11,7 +11,7 @@ Live demo - (https://games-for-you.onrender.com)
 
 ---
 
-## 🚀 Technologies Used
+## Technologies Used
 
 -  **React** – Core library for building the UI  
 -  **Vite** – Fast and modern build tool  
@@ -21,7 +21,7 @@ Live demo - (https://games-for-you.onrender.com)
 
 ---
 
-## ⚙️ How to Run the Project
+## How to Run the Project
 
  1️⃣ Clone the repository
 ```bash

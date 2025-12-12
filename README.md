@@ -39,8 +39,5 @@ npm run dev
 Then open your browser at: http://localhost:5173
 
 ---
-### 💬 Contact
 
-👤 Kaue Barbi
-
-📧 kauebarbicode@email.com
+Built with ❤️ by [Kaue Barbi](https://kabarbi.vercel.app)

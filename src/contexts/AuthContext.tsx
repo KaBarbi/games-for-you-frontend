@@ -1,71 +1,67 @@
-import React, {
-  createContext,
-  useContext,
-  useState,
-  useEffect,
-  type ReactNode,
-} from "react";
-import { api } from "../services/api";
-
-interface User {
-  id: number;
-  username: string;
-  email: string;
-}
+import { createContext, useContext, useState, type ReactNode } from "react";
+import axios from "axios";
 
 interface AuthContextType {
-  user: User | null;
+  user: string | null;
   login: (email: string, password: string) => Promise<void>;
+  register: (
+    username: string,
+    email: string,
+    password: string,
+    password2: string
+  ) => Promise<void>;
   logout: () => void;
 }
 
-const AuthContext = createContext<AuthContextType>({
-  user: null,
-  login: async () => {},
-  logout: () => {},
-});
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<User | null>(null);
-
-  useEffect(() => {
-    const access = localStorage.getItem("access");
-    const storedUser = localStorage.getItem("user");
-
-    if (access && storedUser) {
-      api.defaults.headers.common["Authorization"] = `Bearer ${access}`;
-      setUser(JSON.parse(storedUser));
-    }
-  }, []);
+  const [user, setUser] = useState<string | null>(
+    localStorage.getItem("user") || null
+  );
 
   const login = async (email: string, password: string) => {
-    const response = await api.post("login/", { email, password });
+    const res = await axios.post("http://localhost:8000/api/users/login/", {
+      username: email, // ⚠ enviar email como "username"
+      password,
+    });
 
-    const { access, refresh, user } = response.data;
+    localStorage.setItem("access_token", res.data.access);
+    localStorage.setItem("refresh_token", res.data.refresh);
+    localStorage.setItem("user", email);
+    setUser(email);
+  };
 
-    localStorage.setItem("access", access);
-    localStorage.setItem("refresh", refresh);
-    localStorage.setItem("user", JSON.stringify(user));
-
-    api.defaults.headers.common["Authorization"] = `Bearer ${access}`;
-
-    setUser(user);
+  const register = async (
+    username: string,
+    email: string,
+    password: string,
+    password2: string
+  ) => {
+    await axios.post("http://localhost:8000/api/users/register/", {
+      username,
+      email,
+      password,
+      password2,
+    });
   };
 
   const logout = () => {
-    localStorage.removeItem("access");
-    localStorage.removeItem("refresh");
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("refresh_token");
     localStorage.removeItem("user");
     setUser(null);
-    delete api.defaults.headers.common["Authorization"];
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, login, register, logout }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
-// eslint-disable-next-line react-refresh/only-export-components
-export const useAuth = () => useContext(AuthContext);
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) throw new Error("useAuth must be used within AuthProvider");
+  return context;
+};

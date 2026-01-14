@@ -1,59 +1,62 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 
-const App: React.FC = () => {
-  const [email, setEmail] = useState("");
+const Login = () => {
+  const { login } = useAuth();
+  const navigate = useNavigate();
+
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  // const mainColor = "#22d3ee"
+  const [error, setError] = useState("");
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Email:", email, "Senha:", password);
-    //API de login
+    setError("");
+
+    try {
+      await login(username, password);
+      navigate("/");
+    } catch {
+      setError("Invalid username or password");
+    }
   };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="bg-white rounded-xl shadow-lg p-10 w-full max-w-md">
-        <div className="flex justify-center mb-6"></div>
-
         <h1 className="text-2xl font-bold text-center mb-2">Welcome back</h1>
+
         <p className="text-gray-500 text-center mb-6">
           Log in to your account to continue shopping
         </p>
+
+        {error && (
+          <p className="text-red-500 text-sm text-center mb-4">{error}</p>
+        )}
+
         <form onSubmit={handleLogin} className="space-y-4">
           <div>
-            <label className="block text-gray-700 mb-1">Email</label>
+            <label className="block text-gray-700 mb-1">Username</label>
             <input
-              type="email"
-              placeholder="seu@email.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
               className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-[#22d3ee]"
               required
             />
           </div>
+
           <div>
             <label className="block text-gray-700 mb-1">Password</label>
-            <div className="relative">
-              <input
-                placeholder="Your Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full border border-gray-300 rounded-lg p-3 pr-10 focus:outline-none focus:ring-2 focus:ring-[#22d3ee]"
-                required
-              />
-            </div>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-[#22d3ee]"
+              required
+            />
           </div>
-          <div className="flex items-center justify-between text-sm">
-            <label className="flex items-center gap-2">
-              <input type="checkbox" className="accent-[#22d3ee]" />
-              Remember login
-            </label>
-            <a href="#" className="text-[#22d3ee] hover:underline">
-              Forgot your password?
-            </a>
-          </div>
+
           <button
             type="submit"
             className="w-full bg-[#22d3ee] text-white p-3 rounded-lg font-semibold hover:brightness-105 transition"
@@ -61,15 +64,16 @@ const App: React.FC = () => {
             Confirm
           </button>
         </form>
+
         <p className="text-center text-sm text-gray-500 mt-4">
-          Dont have an account?{" "}
-          <Link to="/register" className="text-[#22d3ee] hover:underline">
+          Don’t have an account?{" "}
+          <a href="/register" className="text-[#22d3ee] hover:underline">
             Sign up here
-          </Link>
+          </a>
         </p>
       </div>
     </div>
   );
 };
 
-export default App;
+export default Login;

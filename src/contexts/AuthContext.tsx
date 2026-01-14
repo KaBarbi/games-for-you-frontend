@@ -1,4 +1,10 @@
-import { createContext, useContext, useState, type ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  type ReactNode,
+} from "react";
 import axios from "axios";
 
 interface AuthContextType {
@@ -11,18 +17,24 @@ interface AuthContextType {
     password2: string
   ) => Promise<void>;
   logout: () => void;
+  loading: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<string | null>(
-    localStorage.getItem("user") || null
-  );
+  const [user, setUser] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) setUser(storedUser);
+    setLoading(false); // finish loading
+  }, []);
 
   const login = async (email: string, password: string) => {
     const res = await axios.post("http://localhost:8000/api/users/login/", {
-      username: email, // ⚠ enviar email como "username"
+      username: email, // ⚠ send email as username
       password,
     });
 
@@ -54,12 +66,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, register, logout }}>
+    <AuthContext.Provider value={{ user, login, register, logout, loading }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) throw new Error("useAuth must be used within AuthProvider");

@@ -1,59 +1,64 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  type ReactNode,
+} from "react";
 import { api } from "../services/api";
 
+interface User {
+  id: number;
+  username: string;
+  email: string;
+}
+
 interface AuthContextType {
-  user: any;
-  login: (username: string, password: string) => Promise<void>;
+  user: User | null;
+  login: (email: string, password: string) => Promise<void>;
   logout: () => void;
 }
 
-const AuthContext = createContext<AuthContextType>({} as AuthContextType);
+const AuthContext = createContext<AuthContextType>({
+  user: null,
+  login: async () => {},
+  logout: () => {},
+});
 
-export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const [user, setUser] = useState<any>(null);
+export const AuthProvider = ({ children }: { children: ReactNode }) => {
+  const [user, setUser] = useState<User | null>(null);
 
-  const fetchUser = async () => {
-    const response = await api.get("user/");
-    setUser(response.data);
-  };
+  useEffect(() => {
+    const access = localStorage.getItem("access");
+    const storedUser = localStorage.getItem("user");
 
-  const login = async (username: string, password: string) => {
-    // 1️⃣ login
-    const response = await api.post("login/", {
-      username: username.trim(),
-      password,
-    });
+    if (access && storedUser) {
+      api.defaults.headers.common["Authorization"] = `Bearer ${access}`;
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
 
-    const { access, refresh } = response.data;
+  const login = async (email: string, password: string) => {
+    const response = await api.post("login/", { email, password });
 
-    // 2️⃣ tokens
+    const { access, refresh, user } = response.data;
+
     localStorage.setItem("access", access);
     localStorage.setItem("refresh", refresh);
+    localStorage.setItem("user", JSON.stringify(user));
 
     api.defaults.headers.common["Authorization"] = `Bearer ${access}`;
 
-    // 3️⃣ fetch user 
-    try {
-      await fetchUser();
-    } catch {
-      console.warn("User fetched failed, but login succeeded");
-    }
+    setUser(user);
   };
 
   const logout = () => {
     localStorage.removeItem("access");
     localStorage.removeItem("refresh");
+    localStorage.removeItem("user");
     setUser(null);
     delete api.defaults.headers.common["Authorization"];
   };
-
-  useEffect(() => {
-    const token = localStorage.getItem("access");
-    if (token) {
-      api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-      fetchUser().catch(() => logout());
-    }
-  }, []);
 
   return (
     <AuthContext.Provider value={{ user, login, logout }}>
@@ -62,4 +67,5 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useAuth = () => useContext(AuthContext);

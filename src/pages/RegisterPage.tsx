@@ -40,10 +40,10 @@ const Register: React.FC = () => {
       const data = await response.json();
 
       if (response.ok) {
-        alert("Conta criada com sucesso!");
-        navigate("/login"); // redireciona para login
+        // alert("account created successfully!");
+        navigate("/login");
       } else {
-        // Exibe os erros retornados pelo backend
+        // Show errors
         const errors = Object.entries(data)
           .map(([key, value]) => `${key}: ${value}`)
           .join("\n");

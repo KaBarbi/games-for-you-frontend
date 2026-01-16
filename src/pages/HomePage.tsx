@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import GameBanner from "../components/GameBanner";
 import { api } from "../services/api";
+import ConstructionAlert from "../components/ConstructionAlert";
 
 type Game = {
   platform_display: string;
@@ -44,6 +45,7 @@ const HomePage = () => {
 
   return (
     <div className="bg-[#f9f9fb] min-h-screen">
+      <ConstructionAlert />
       <GameBanner />
 
       <section className="py-12 px-6">

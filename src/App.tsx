@@ -6,13 +6,13 @@ import CartPage from "./pages/CartPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import CatalogPage from "./pages/CatalogPage";
-import ConstructionAlert from "./components/ConstructionAlert";
+// import ConstructionAlert from "./components/ConstructionAlert";
 
 export default function App() {
   return (
     <>
       <Navbar />
-      <ConstructionAlert />
+      {/* <ConstructionAlert /> */}
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/games/:id" element={<GameDetailsPage />} />

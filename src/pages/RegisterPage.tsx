@@ -15,14 +15,13 @@ const Register: React.FC = () => {
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // validação local
     if (password !== confirmPassword) {
       setErrors({ confirmPassword: "Passwords do not match" });
       return;
     }
 
     setLoading(true);
-    setErrors({}); // limpa erros anteriores
+    setErrors({});
 
     try {
       await api.post("/users/register/", {
@@ -32,7 +31,7 @@ const Register: React.FC = () => {
         password2: confirmPassword,
       });
 
-      // sucesso
+      // sucess
       navigate("/login");
     } catch (error: any) {
       if (error.response && error.response.data) {

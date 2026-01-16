@@ -1,20 +1,60 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Register: React.FC = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleRegister = (e: React.FormEvent) => {
+  const navigate = useNavigate();
+
+  const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
+
     if (password !== confirmPassword) {
       alert("Passwords do not match!");
       return;
     }
-    console.log("Nome:", name, "Email:", email, "Senha:", password);
-    // API de registro
+
+    setLoading(true);
+
+    try {
+      const response = await fetch(
+        "http://127.0.0.1:8000/api/users/register/",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: name,
+            email: email,
+            password: password,
+            password2: confirmPassword,
+          }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert("Conta criada com sucesso!");
+        navigate("/login"); // redireciona para login
+      } else {
+        // Exibe os erros retornados pelo backend
+        const errors = Object.entries(data)
+          .map(([key, value]) => `${key}: ${value}`)
+          .join("\n");
+        alert(errors);
+      }
+    } catch (err) {
+      console.error("Erro ao registrar:", err);
+      alert("Erro ao conectar com o servidor.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -71,9 +111,10 @@ const Register: React.FC = () => {
           </div>
           <button
             type="submit"
-            className="w-full bg-[#22d3ee] text-white p-3 rounded-lg font-semibold hover:brightness-105 transition"
+            disabled={loading}
+            className="w-full bg-[#22d3ee] text-white p-3 rounded-lg font-semibold hover:brightness-105 transition disabled:opacity-50"
           >
-            Register
+            {loading ? "Registering..." : "Register"}
           </button>
         </form>
         <p className="text-center text-sm text-gray-500 mt-4">

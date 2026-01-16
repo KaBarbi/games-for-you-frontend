@@ -69,7 +69,7 @@ const Register: React.FC = () => {
             <label className="block text-gray-700 mb-1">Name</label>
             <input
               type="text"
-              placeholder="Seu nome"
+              placeholder="your name"
               value={name}
               onChange={(e) => setName(e.target.value)}
               className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-[#22d3ee]"
@@ -80,7 +80,7 @@ const Register: React.FC = () => {
             <label className="block text-gray-700 mb-1">Email</label>
             <input
               type="email"
-              placeholder="seu@email.com"
+              placeholder="Your@email.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-[#22d3ee]"
@@ -91,7 +91,7 @@ const Register: React.FC = () => {
             <label className="block text-gray-700 mb-1">Password</label>
             <input
               type="password"
-              placeholder="Sua senha"
+              placeholder="Your password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-[#22d3ee]"
@@ -102,7 +102,7 @@ const Register: React.FC = () => {
             <label className="block text-gray-700 mb-1">Confirm Password</label>
             <input
               type="password"
-              placeholder="Confirme sua senha"
+              placeholder="Confirm your password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-[#22d3ee]"

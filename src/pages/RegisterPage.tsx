@@ -25,7 +25,7 @@ const Register: React.FC = () => {
 
     try {
       await api.post("/users/register/", {
-        username: name,
+        full_name: name,
         email,
         password,
         password2: confirmPassword,

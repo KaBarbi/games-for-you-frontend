@@ -7,10 +7,10 @@ import { AuthProvider } from "./contexts/AuthContext";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <AuthProvider>
-      <BrowserRouter>
+    <BrowserRouter>
+      <AuthProvider>
         <App />
-      </BrowserRouter>
-    </AuthProvider>
-  </StrictMode>
+      </AuthProvider>
+    </BrowserRouter>
+  </StrictMode>,
 );

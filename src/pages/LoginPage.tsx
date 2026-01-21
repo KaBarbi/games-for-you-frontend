@@ -1,24 +1,28 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 
 const LoginPage = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState(""); // agora email
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
+    setLoading(true);
 
     try {
-      await login(email, password); 
-      navigate("/"); 
+      await login(email, password);
+      navigate("/");
     } catch {
       setError("Invalid email or password");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -71,17 +75,20 @@ const LoginPage = () => {
 
           <button
             type="submit"
-            className="w-full bg-[#22d3ee] text-white p-3 rounded-lg font-semibold hover:brightness-105 transition"
+            disabled={loading}
+            className={`w-full bg-[#22d3ee] text-white p-3 rounded-lg font-semibold hover:brightness-105 transition ${
+              loading ? "opacity-70 cursor-not-allowed" : ""
+            }`}
           >
-            Confirm
+            {loading ? "Logging in..." : "Confirm"}
           </button>
         </form>
 
         <p className="text-center text-sm text-gray-500 mt-4">
           Don’t have an account?{" "}
-          <a href="/register" className="text-[#22d3ee] hover:underline">
+          <Link to="/register" className="text-[#22d3ee] hover:underline">
             Sign up here
-          </a>
+          </Link>
         </p>
       </div>
     </div>

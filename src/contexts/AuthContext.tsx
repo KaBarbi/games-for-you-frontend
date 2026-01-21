@@ -32,7 +32,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const token = localStorage.getItem("access");
 
     if (storedUser && token) {
-      setUser(JSON.parse(storedUser));
+      try {
+        const parsedUser = JSON.parse(storedUser);
+        setUser(parsedUser);
+      } catch {
+        // storage corrompido
+        localStorage.removeItem("user");
+        localStorage.removeItem("access");
+        localStorage.removeItem("refresh");
+        setUser(null);
+      }
     }
 
     setLoading(false);
@@ -43,6 +52,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       email,
       password,
     });
+
+    if (!response.data.user || !response.data.access) {
+      throw new Error("Resposta de login inválida");
+    }
 
     localStorage.setItem("access", response.data.access);
     localStorage.setItem("refresh", response.data.refresh);

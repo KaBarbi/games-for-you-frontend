@@ -1,16 +1,26 @@
-import { useState, type JSX } from "react"
-import { ShoppingCart, User, Search, Menu, X } from "lucide-react"
-import { Link } from "react-router-dom"
+import { useState, type JSX } from "react";
+import { ShoppingCart, User, Search, Menu, X } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 
 export function Navbar(): JSX.Element {
-  const [search, setSearch] = useState("")
-  const [open, setOpen] = useState(false)
+  const [search, setSearch] = useState("");
+  const [open, setOpen] = useState(false);
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
+
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
 
   const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault()
-    console.log("Searching for:", search)
-    setOpen(false)
-  }
+    e.preventDefault();
+    setOpen(false);
+  };
+
+  const handleLogout = () => {
+    logout();
+    setUserMenuOpen(false);
+    navigate("/");
+  };
 
   return (
     <nav className="bg-[#1b1f3b] text-white px-6 py-3 flex items-center justify-between relative z-40">
@@ -40,7 +50,6 @@ export function Navbar(): JSX.Element {
       <form
         onSubmit={handleSearch}
         className="hidden md:flex flex-1 max-w-md mx-8"
-        role="search"
       >
         <div className="relative w-full">
           <input
@@ -48,97 +57,103 @@ export function Navbar(): JSX.Element {
             placeholder="Search games..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full bg-white/10 border border-white/20 text-white placeholder:text-white/60 rounded-full px-4 py-2 focus:bg-white/20 focus:border-[#22d3ee] focus:outline-none"
+            className="w-full bg-white/10 border border-white/20 text-white placeholder:text-white/60 rounded-full px-4 py-2 focus:outline-none"
           />
           <button
             type="submit"
-            className="absolute right-1 top-1/2 -translate-y-1/2 h-8 w-8 bg-[#22d3ee] hover:bg-[#1ed2f0] text-[#0f0f2f] rounded-full flex items-center justify-center"
+            className="absolute right-1 top-1/2 -translate-y-1/2 h-8 w-8 bg-[#22d3ee] text-[#0f0f2f] rounded-full flex items-center justify-center"
           >
-            <Search className="h-4 w-4" />
+            <Search size={16} />
           </button>
         </div>
       </form>
 
       {/* Desktop Links */}
-      <div className="hidden md:flex items-center gap-6">
-        <Link to="/" className="hover:text-[#22d3ee]">Home</Link>
-        <Link to="/catalog" className="hover:text-[#22d3ee]">Catalog</Link>
+      <div className="hidden md:flex items-center gap-6 relative">
+        <Link to="/" className="hover:text-[#22d3ee]">
+          Home
+        </Link>
+        <Link to="/catalog" className="hover:text-[#22d3ee]">
+          Catalog
+        </Link>
         <Link to="/cart" className="hover:text-[#22d3ee]">
           <ShoppingCart size={20} />
         </Link>
-        <Link to="/login" className="hover:text-[#22d3ee]">
-          <User size={20} />
-        </Link>
+
+        {/* USER DROPDOWN */}
+        <div className="relative flex items-center h-full">
+          <button
+            onClick={() => setUserMenuOpen((v) => !v)}
+            className="flex items-center justify-center h-8 w-8 hover:text-[#22d3ee]"
+          >
+            <User size={20} />
+          </button>
+
+          {userMenuOpen && (
+            <div className="absolute right-0 top-full mt-3 w-40 bg-[#1b1f3b] rounded-lg shadow-lg">
+              <Link
+                to="#"
+                onClick={() => setUserMenuOpen(false)}
+                className="block px-4 py-2 text-sm hover:bg-white/10"
+              >
+                Settings
+              </Link>
+
+              {user ? (
+                <button
+                  onClick={handleLogout}
+                  className="w-full text-left px-4 py-2 text-sm hover:bg-white/10"
+                >
+                  Logout
+                </button>
+              ) : (
+                <Link
+                  to="/login"
+                  onClick={() => setUserMenuOpen(false)}
+                  className="block px-4 py-2 text-sm hover:bg-white/10"
+                >
+                  Login
+                </Link>
+              )}
+            </div>
+          )}
+        </div>
       </div>
 
       {/* MOBILE MENU */}
       <div
-        className={`md:hidden absolute left-0 top-full w-full transform transition-transform duration-200 ${
-          open ? "translate-y-0 opacity-100" : "-translate-y-2 opacity-0 pointer-events-none"
+        className={`md:hidden absolute left-0 top-full w-full transition ${
+          open ? "block" : "hidden"
         }`}
-        aria-hidden={!open}
-        style={{ zIndex: 1000 }}
       >
-        <div className="bg-[#1b1f3b] py-4 px-6 flex flex-col shadow-lg border-t border-white/5">
-
-          {/* Mobile Search */}
-          <form onSubmit={handleSearch} className="pb-4 border-b border-white/10">
-            <div className="relative w-full">
-              <input
-                type="text"
-                placeholder="Search games..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                className="w-full bg-white/10 border border-white/20 text-white placeholder:text-white/60 rounded-full px-4 py-2 focus:bg-white/20 focus:border-[#22d3ee] focus:outline-none"
-              />
-              <button
-                type="submit"
-                className="absolute right-1 top-1/2 -translate-y-1/2 h-8 w-8 bg-[#22d3ee] hover:bg-[#1ed2f0] text-[#0f0f2f] rounded-full flex items-center justify-center"
-              >
-                <Search className="h-4 w-4" />
-              </button>
-            </div>
-          </form>
-
-          {/* Links with Dividers */}
-          <Link
-            to="/"
-            onClick={() => setOpen(false)}
-            className="py-3 border-b border-white/10 hover:text-[#22d3ee]"
-          >
+        <div className="bg-[#1b1f3b] px-6 py-4 flex flex-col border-t border-white/10">
+          <Link to="/" onClick={() => setOpen(false)} className="py-2">
             Home
           </Link>
-
-          <Link
-            to="/catalog"
-            onClick={() => setOpen(false)}
-            className="py-3 border-b border-white/10 hover:text-[#22d3ee]"
-          >
+          <Link to="/catalog" onClick={() => setOpen(false)} className="py-2">
             Catalog
           </Link>
-
-          <Link
-            to="/cart"
-            onClick={() => setOpen(false)}
-            className="py-3 border-b border-white/10 hover:text-[#22d3ee] flex items-center gap-2"
-          >
-            <ShoppingCart size={20} />
-            <span>Cart</span>
+          <Link to="/cart" onClick={() => setOpen(false)} className="py-2">
+            Cart
           </Link>
 
-          <Link
-            to="/login"
-            onClick={() => setOpen(false)}
-            className="py-3 hover:text-[#22d3ee] flex items-center gap-2"
-          >
-            <User size={20} />
-            <span>Login</span>
+          <Link to="/settings" onClick={() => setOpen(false)} className="py-2">
+            Settings
           </Link>
 
+          {user ? (
+            <button onClick={handleLogout} className="py-2 text-left">
+              Logout
+            </button>
+          ) : (
+            <Link to="/login" onClick={() => setOpen(false)} className="py-2">
+              Login
+            </Link>
+          )}
         </div>
       </div>
     </nav>
-  )
+  );
 }
 
-export default Navbar
+export default Navbar;

@@ -1,16 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { api } from "../services/api";
+import { useAuth } from "../contexts/AuthContext";
 
 const Register: React.FC = () => {
+  const { register } = useAuth();
+  const navigate = useNavigate();
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
-  const navigate = useNavigate();
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -24,14 +26,7 @@ const Register: React.FC = () => {
     setErrors({});
 
     try {
-      await api.post("/users/register/", {
-        full_name: name,
-        email,
-        password,
-        password2: confirmPassword,
-      });
-
-      // sucess
+      await register(name, email, password, confirmPassword);
       navigate("/login");
     } catch (error: any) {
       if (error.response && error.response.data) {
@@ -41,7 +36,10 @@ const Register: React.FC = () => {
         if (data.username) newErrors.username = data.username.join(" ");
         if (data.email) newErrors.email = data.email.join(" ");
         if (data.password) newErrors.password = data.password.join(" ");
-        if (!newErrors.username && !newErrors.email && !newErrors.password) {
+        if (data.password2)
+          newErrors.confirmPassword = data.password2.join(" ");
+
+        if (Object.keys(newErrors).length === 0) {
           newErrors.general = "Registration failed. Please try again.";
         }
 

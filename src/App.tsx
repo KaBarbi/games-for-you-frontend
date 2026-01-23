@@ -6,13 +6,14 @@ import CartPage from "./pages/CartPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import CatalogPage from "./pages/CatalogPage";
+import Footer from "./components/Footer";
 // import ConstructionAlert from "./components/ConstructionAlert";
 
 export default function App() {
   return (
     <>
       <Navbar />
-      {/* <ConstructionAlert /> */}
+
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/games/:id" element={<GameDetailsPage />} />
@@ -21,6 +22,8 @@ export default function App() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/catalog" element={<CatalogPage />} />
       </Routes>
+
+      <Footer />
     </>
   );
 }

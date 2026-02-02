@@ -11,6 +11,13 @@ Live demo - (https://games-for-you.onrender.com)
 
 ---
 
+## User Interaction Flow
+This diagram represents the main actions available to users and the restrictions
+based on authentication state.
+<img width="1366" height="1006" alt="fluxo games" src="https://github.com/user-attachments/assets/01b3aa80-7718-414f-84d2-76cf7a45ff98" />
+
+---
+
 ## Technologies Used
 
 -  **React** – Core library for building the UI  

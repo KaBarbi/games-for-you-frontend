@@ -17,14 +17,20 @@ based on authentication state.
 <img width="1366" height="1006" alt="fluxo games" src="https://github.com/user-attachments/assets/01b3aa80-7718-414f-84d2-76cf7a45ff98" />
 
 ---
+## Features
+- Browse game catalog
+- User authentication (login / register)
+- Add games to cart (authenticated users only)
+- Checkout flow
+- User profile and orders
+## Tech Stack
 
-## Technologies Used
+---
 
--  **React** – Core library for building the UI  
--  **Vite** – Fast and modern build tool  
--  **Tailwind CSS** – Utility-first CSS framework for responsive design  
--  **React Router DOM** – Client-side navigation between pages  
--  **React Icons** – Icon library for UI elements  
+- React
+- TypeScript
+- Vite
+- Axios
 
 ---
 

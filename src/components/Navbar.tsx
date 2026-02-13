@@ -92,7 +92,7 @@ export function Navbar(): JSX.Element {
           {userMenuOpen && (
             <div className="absolute right-0 top-full mt-3 w-40 bg-[#1b1f3b] rounded-lg shadow-lg">
               <Link
-                to="#"
+                to="/profile"
                 onClick={() => setUserMenuOpen(false)}
                 className="block px-4 py-2 text-sm hover:bg-white/10"
               >

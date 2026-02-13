@@ -96,7 +96,7 @@ export function Navbar(): JSX.Element {
                 onClick={() => setUserMenuOpen(false)}
                 className="block px-4 py-2 text-sm hover:bg-white/10"
               >
-                Settings
+                Profile
               </Link>
 
               {user ? (

@@ -22,7 +22,7 @@ export default function ProfilePage() {
   return (
     <div className="min-h-screen bg-gray-100">
       {/* HEADER */}
-      <div className="bg-gradient-to-r from-indigo-900 to-indigo-800 text-white pb-20 pt-10">
+      <div className="bg-gradient-to-r from-[#1a2057] to-[#12164b] text-white pb-20 pt-10">
         <div className="max-w-6xl mx-auto px-6 flex items-center gap-6">
           <div className="w-28 h-28 rounded-full bg-grey-700 border-4 border-emerald-400 flex items-center justify-center">
             <User size={56} className="text-emerald-400" />
@@ -140,26 +140,34 @@ function ProfileSection() {
         <h2 className="text-lg font-semibold mb-6">Quick Actions</h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <QuickAction
-            icon={<ShoppingBag size={18} className="text-emerald-400" />}
-            title="Continue Shopping"
-            subtitle="Browse catalog"
-          />
-          <QuickAction
-            icon={<ShoppingCart size={18} className="text-emerald-400" />}
-            title="My Cart"
-            subtitle="View items"
-          />
-          <QuickAction
-            icon={<CreditCard size={18} className="text-emerald-400" />}
-            title="Payments"
-            subtitle="Manage cards"
-          />
-          <QuickAction
-            icon={<History size={18} className="text-emerald-400" />}
-            title="Activity"
-            subtitle="View history"
-          />
+          <a href="/catalog">
+            <QuickAction
+              icon={<ShoppingBag size={18} className="text-emerald-400" />}
+              title="Continue Shopping"
+              subtitle="Browse catalog"
+            />
+          </a>
+          <a href="#">
+            <QuickAction
+              icon={<ShoppingCart size={18} className="text-emerald-400" />}
+              title="My Cart"
+              subtitle="View items"
+            />
+          </a>
+          <a href="#">
+            <QuickAction
+              icon={<CreditCard size={18} className="text-emerald-400" />}
+              title="Payments"
+              subtitle="Manage cards"
+            />
+          </a>
+          <a href="#">
+            <QuickAction
+              icon={<History size={18} className="text-emerald-400" />}
+              title="Activity"
+              subtitle="View history"
+            />
+          </a>
         </div>
       </div>
     </>

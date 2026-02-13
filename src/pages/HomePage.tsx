@@ -34,7 +34,7 @@ const HomePage = () => {
 
         setGames(filtered);
       } catch (err) {
-        setError("Failed to load games 😕");
+        setError("Failed to load games");
       } finally {
         setLoading(false);
       }

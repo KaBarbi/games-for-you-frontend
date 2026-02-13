@@ -147,7 +147,7 @@ function ProfileSection() {
               subtitle="Browse catalog"
             />
           </a>
-          <a href="#">
+          <a href="/cart">
             <QuickAction
               icon={<ShoppingCart size={18} className="text-emerald-400" />}
               title="My Cart"

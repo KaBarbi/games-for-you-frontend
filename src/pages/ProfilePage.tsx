@@ -7,12 +7,6 @@ import {
   Pencil,
   MapPin,
   Mail,
-  // ShoppingBag,
-  // ShoppingCart,
-  // CreditCard,
-  // History,
-  // ChevronRight,
-  // LogOut,
 } from "lucide-react";
 
 type Tab = "profile" | "orders" | "settings";

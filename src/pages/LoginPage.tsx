@@ -1,10 +1,13 @@
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 
 const LoginPage = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const from = location.state?.from?.pathname || "/";
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -18,11 +21,9 @@ const LoginPage = () => {
 
     try {
       await login(email, password);
-      navigate("/");
+      navigate(from, { replace: true });
     } catch {
       setError("Invalid email or password");
-    } finally {
-      setLoading(false);
     }
   };
 

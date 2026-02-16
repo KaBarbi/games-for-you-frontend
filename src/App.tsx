@@ -1,4 +1,5 @@
 import { Routes, Route } from "react-router-dom";
+import { ProtectedRoute } from "./routes/ProtectedRoute";
 import Navbar from "./components/Navbar";
 import HomePage from "./pages/HomePage";
 import GameDetailsPage from "./pages/GameDetailsPage";
@@ -7,6 +8,7 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import CatalogPage from "./pages/CatalogPage";
 import Footer from "./components/Footer";
+import ProfilePage from "./pages/ProfilePage";
 // import ConstructionAlert from "./components/ConstructionAlert";
 
 export default function App() {
@@ -21,6 +23,9 @@ export default function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/catalog" element={<CatalogPage />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path="/profile" element={<ProfilePage />} />
+        </Route>
       </Routes>
 
       <Footer />

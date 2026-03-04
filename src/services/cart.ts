@@ -1,5 +1,5 @@
 import { api } from "./api";
-import type { Cart, CartItem } from "../types";
+import type { Cart, CartItem } from "../types/games";
 
 export const getCart = async (): Promise<Cart> => {
   const res = await api.get("carts/");
@@ -8,7 +8,7 @@ export const getCart = async (): Promise<Cart> => {
 
 export const addItemToCart = async (
   gameId: number,
-  quantity: number = 1
+  quantity: number = 1,
 ): Promise<CartItem> => {
   const res = await api.post("cart-items/", { game_id: gameId, quantity });
   return res.data;

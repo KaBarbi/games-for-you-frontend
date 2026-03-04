@@ -2,17 +2,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect, useState } from "react";
 import GameBanner from "../components/GameBanner";
-import { api } from "../services/api";
+import { getGames } from "../services/games";
 import ConstructionAlert from "../components/ConstructionAlert";
-
-type Game = {
-  platform_display: string;
-  id: number;
-  title: string;
-  price: number;
-  platform: string;
-  cover: string;
-};
+import type { Game } from "../types/games";
 
 const HomePage = () => {
   const [games, setGames] = useState<Game[]>([]);
@@ -25,11 +17,10 @@ const HomePage = () => {
   useEffect(() => {
     const loadGames = async () => {
       try {
-        const res = await api.get("games/");
+        const gamesData = await getGames();
 
-        // filtra só os que você quer mostrar
-        const filtered = res.data.filter((game: Game) =>
-          FEATURED_IDS.includes(game.id)
+        const filtered = gamesData.filter((game) =>
+          FEATURED_IDS.includes(game.id),
         );
 
         setGames(filtered);
@@ -63,7 +54,7 @@ const HomePage = () => {
             {games.map((game) => {
               const coverSrc = new URL(
                 `../assets/covers/${game.cover}`,
-                import.meta.url
+                import.meta.url,
               ).href;
 
               return (

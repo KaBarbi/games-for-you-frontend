@@ -28,10 +28,10 @@ export default function ProfilePage() {
             <User size={56} className="text-emerald-400" />
           </div>
           <div>
-            <h1 className="text-2xl font-semibold">John Doe</h1>
-            <p className="text-gray-200 text-sm">john.doe@email.com</p>
+            <h1 className="text-2xl font-semibold">You</h1>
+            <p className="text-gray-200 text-sm">your@email.com</p>
             <span className="inline-block mt-2 text-xs bg-emerald-500/20 text-emerald-300 px-3 py-1 rounded-full border border-emerald-400">
-              Member since January 2024
+              Member since January 2025
             </span>
           </div>
         </div>
@@ -96,7 +96,7 @@ function ProfileSection() {
               <label className="text-sm text-gray-500">Full Name</label>
               <div className="mt-1 bg-gray-100 p-3 rounded-lg flex items-center gap-2">
                 <User size={16} className="text-gray-500" />
-                John Doe
+                You
               </div>
             </div>
 
@@ -104,7 +104,7 @@ function ProfileSection() {
               <label className="text-sm text-gray-500">Email</label>
               <div className="mt-1 bg-gray-100 p-3 rounded-lg flex items-center gap-2">
                 <Mail size={16} className="text-gray-500" />
-                john.doe@email.com
+                your@email.com
               </div>
             </div>
           </div>

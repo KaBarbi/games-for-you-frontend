@@ -1,16 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useEffect } from "react";
-import { api } from "../services/api";
-
-type Game = {
-  id: number;
-  title: string;
-  price: number;
-  platform: string;
-  platform_display: string;
-  cover: string;
-};
+import type { Game } from "../types/games";
+import { getGames } from "../services/games";
 
 const CatalogPage: React.FC = () => {
   const [games, setGames] = useState<Game[]>([]);
@@ -19,7 +11,7 @@ const CatalogPage: React.FC = () => {
     "All" | "PlayStation" | "Xbox" | "Nintendo Switch"
   >("All");
   const [sort, setSort] = useState<"Name" | "Lowest Price" | "Highest Price">(
-    "Name"
+    "Name",
   );
 
   const [loading, setLoading] = useState(true);
@@ -28,8 +20,8 @@ const CatalogPage: React.FC = () => {
   useEffect(() => {
     const loadGames = async () => {
       try {
-        const res = await api.get("games/");
-        setGames(Array.isArray(res.data) ? res.data : []);
+        const gamesData = await getGames();
+        setGames(gamesData);
       } catch (err) {
         setError("Failed to load games 😕");
       } finally {
@@ -44,7 +36,7 @@ const CatalogPage: React.FC = () => {
     .filter(
       (game) =>
         game.title.toLowerCase().includes(search.toLowerCase()) &&
-        (platformFilter === "All" || game.platform_display === platformFilter)
+        (platformFilter === "All" || game.platform_display === platformFilter),
     )
     .sort((a, b) => {
       if (sort === "Name") return a.title.localeCompare(b.title);
@@ -80,7 +72,7 @@ const CatalogPage: React.FC = () => {
                 >
                   {platform}
                 </button>
-              )
+              ),
             )}
           </div>
 
@@ -114,7 +106,7 @@ const CatalogPage: React.FC = () => {
           {filteredGames.map((game) => {
             const coverSrc = new URL(
               `../assets/covers/${game.cover}`,
-              import.meta.url
+              import.meta.url,
             ).href;
 
             return (

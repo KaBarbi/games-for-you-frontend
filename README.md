@@ -11,26 +11,39 @@ Live demo - (https://games-for-you.onrender.com)
 
 ---
 
-## User Interaction Flow
-This diagram represents the main actions available to users and the restrictions
-based on authentication state.
-<img width="1366" height="1006" alt="fluxo games" src="https://github.com/user-attachments/assets/01b3aa80-7718-414f-84d2-76cf7a45ff98" />
-
----
-## Features
-- Browse game catalog
-- User authentication (login / register)
-- Add games to cart (authenticated users only)
-- Checkout flow
-- User profile and orders
 ## Tech Stack
-
----
 
 - React
 - TypeScript
 - Vite
 - Axios
+- React Router
+- Context API (state management)
+
+---
+
+## Architecture Overview
+
+The frontend follows a **component-based architecture** using React with TypeScript.
+
+### Architectural Principles
+
+- Component reusability
+- Separation between UI and data-fetching logic
+- Centralized API service layer
+- Strong typing with TypeScript
+- Environment-based configuration
+
+---
+
+## Core Features
+
+- Game catalog browsing
+- Paginated product listing
+- Dynamic filtering (price and platform)
+- User authentication (login / register)
+- Protected routes
+- JWT-based API integration
 
 ---
 

@@ -13,33 +13,29 @@ import {
   ChevronRight,
   LogOut,
 } from "lucide-react";
+import { useAuth } from "../contexts/AuthContext";
 
 type Tab = "profile" | "orders" | "settings";
 
 export default function ProfilePage() {
   const [activeTab, setActiveTab] = useState<Tab>("profile");
+  const { user } = useAuth();
 
   return (
     <div className="min-h-screen bg-gray-100">
-      {/* HEADER */}
       <div className="bg-gradient-to-r from-[#1a2057] to-[#12164b] text-white pb-20 pt-10">
         <div className="max-w-6xl mx-auto px-6 flex items-center gap-6">
           <div className="w-28 h-28 rounded-full bg-grey-700 border-4 border-emerald-400 flex items-center justify-center">
             <User size={56} className="text-emerald-400" />
           </div>
           <div>
-            <h1 className="text-2xl font-semibold">You</h1>
-            <p className="text-gray-200 text-sm">your@email.com</p>
-            <span className="inline-block mt-2 text-xs bg-emerald-500/20 text-emerald-300 px-3 py-1 rounded-full border border-emerald-400">
-              Member since January 2025
-            </span>
+            <h1 className="text-2xl font-semibold">{user?.full_name ?? ""}</h1>
+            <p className="text-gray-200 text-sm">{user?.email ?? ""}</p>
           </div>
         </div>
       </div>
 
-      {/* CONTENT */}
       <div className="max-w-6xl mx-auto px-6 -mt-10 pb-16">
-        {/* Tabs */}
         <div className="bg-white shadow-md rounded-xl p-2 inline-flex gap-2">
           <TabButton
             active={activeTab === "profile"}
@@ -61,8 +57,12 @@ export default function ProfilePage() {
           />
         </div>
 
-        {/* TAB CONTENT */}
-        {activeTab === "profile" && <ProfileSection />}
+        {activeTab === "profile" && (
+          <ProfileSection
+            full_name={user?.full_name ?? ""}
+            email={user?.email ?? ""}
+          />
+        )}
         {activeTab === "orders" && <OrdersSection />}
         {activeTab === "settings" && <SettingsSection />}
       </div>
@@ -70,14 +70,16 @@ export default function ProfilePage() {
   );
 }
 
-/* -------------------- PROFILE SECTION -------------------- */
-
-function ProfileSection() {
+function ProfileSection({
+  full_name,
+  email,
+}: {
+  full_name: string;
+  email: string;
+}) {
   return (
     <>
-      {/* MAIN CARDS */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-        {/* Personal Info */}
         <div className="bg-white rounded-2xl shadow-sm p-6">
           <div className="flex justify-between items-start">
             <div>
@@ -96,7 +98,7 @@ function ProfileSection() {
               <label className="text-sm text-gray-500">Full Name</label>
               <div className="mt-1 bg-gray-100 p-3 rounded-lg flex items-center gap-2">
                 <User size={16} className="text-gray-500" />
-                You
+                {full_name}
               </div>
             </div>
 
@@ -104,13 +106,12 @@ function ProfileSection() {
               <label className="text-sm text-gray-500">Email</label>
               <div className="mt-1 bg-gray-100 p-3 rounded-lg flex items-center gap-2">
                 <Mail size={16} className="text-gray-500" />
-                your@email.com
+                {email}
               </div>
             </div>
           </div>
         </div>
 
-        {/* Address */}
         <div className="bg-white rounded-2xl shadow-sm p-6">
           <div className="flex justify-between items-start">
             <div>
@@ -126,16 +127,11 @@ function ProfileSection() {
 
           <div className="mt-6 bg-gray-100 p-4 rounded-xl flex gap-3">
             <MapPin size={20} className="text-emerald-500 mt-1" />
-            <div className="text-sm text-gray-700">
-              <p>123 Flower Street</p>
-              <p>Downtown</p>
-              <p>São Paulo - SP</p>
-            </div>
+            <p className="text-sm text-gray-500 italic">No address registered.</p>
           </div>
         </div>
       </div>
 
-      {/* QUICK ACTIONS */}
       <div className="bg-white rounded-2xl shadow-sm p-6 mt-6">
         <h2 className="text-lg font-semibold mb-6">Quick Actions</h2>
 
@@ -174,7 +170,6 @@ function ProfileSection() {
   );
 }
 
-/* -------------------- ORDERS SECTION -------------------- */
 
 function OrdersSection() {
   return (
@@ -187,7 +182,6 @@ function OrdersSection() {
   );
 }
 
-/* -------------------- SETTINGS SECTION -------------------- */
 
 function SettingsSection() {
   return (
@@ -233,7 +227,6 @@ function SettingsSection() {
   );
 }
 
-/* -------------------- REUSABLE COMPONENTS -------------------- */
 
 function TabButton({
   active,

@@ -22,7 +22,7 @@ type Tab = "profile" | "orders" | "settings";
 interface MeData {
   id: number;
   email: string;
-  full_name: string;
+  username: string;
 }
 
 export default function ProfilePage() {
@@ -42,7 +42,7 @@ export default function ProfilePage() {
           </div>
           <div>
             <h1 className="text-2xl font-semibold">
-              {profile?.full_name ?? "—"}
+              {profile?.username ?? "—"}
             </h1>
             <p className="text-gray-200 text-sm">{profile?.email ?? "—"}</p>
           </div>
@@ -99,7 +99,7 @@ function ProfileSection({ profile }: { profile: MeData | null }) {
               <label className="text-sm text-gray-500">Full Name</label>
               <div className="mt-1 bg-gray-100 p-3 rounded-lg flex items-center gap-2">
                 <User size={16} className="text-gray-500" />
-                {profile?.full_name ?? "—"}
+                {profile?.username ?? "—"}
               </div>
             </div>
 

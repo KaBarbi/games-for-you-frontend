@@ -37,7 +37,7 @@ const HomePage = () => {
 
   return (
     <div className="bg-[#f9f9fb] min-h-screen">
-      {/* <ConstructionAlert /> */}
+      <ConstructionAlert />
       <GameBanner />
 
       <section className="py-12 px-6">

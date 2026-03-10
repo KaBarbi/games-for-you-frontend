@@ -5,6 +5,7 @@ import GameBanner from "../components/GameBanner";
 import { getGames } from "../services/games";
 import ConstructionAlert from "../components/ConstructionAlert";
 import type { Game } from "../types/games";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 const HomePage = () => {
   const [games, setGames] = useState<Game[]>([]);
@@ -36,18 +37,21 @@ const HomePage = () => {
 
   return (
     <div className="bg-[#f9f9fb] min-h-screen">
-      <ConstructionAlert />
+      {/* <ConstructionAlert /> */}
       <GameBanner />
 
       <section className="py-12 px-6">
-        <h2 className="text-3xl font-bold mb-8 text-center text-[#0f0f2f]">
+        <h2 className="text-3xl font-bold text-center text-[#0f0f2f]">
           Featured Products
         </h2>
 
         {loading && (
-          <p className="text-center text-gray-500">Loading games...</p>
+          <div className="items-center">
+            <LoadingSpinner size={40} />
+            {/* <p className="text-gray-500">Loading games...</p> */}
+          </div>
         )}
-        {error && <p className="text-center text-red-500">{error}</p>}
+        {error && <p className="text-center text-red-500 mt-8">{error}</p>}
 
         {!loading && !error && (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">

@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import type { Game } from "../types/games";
 import { getGames } from "../services/games";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 const CatalogPage: React.FC = () => {
   const [games, setGames] = useState<Game[]>([]);
@@ -23,7 +24,7 @@ const CatalogPage: React.FC = () => {
         const gamesData = await getGames();
         setGames(gamesData);
       } catch (err) {
-        setError("Failed to load games 😕");
+        setError("Failed to load games");
       } finally {
         setLoading(false);
       }
@@ -96,9 +97,11 @@ const CatalogPage: React.FC = () => {
       </div>
 
       {loading && (
-        <p className="text-center text-gray-500 text-lg">Loading games...</p>
+        <div className="items-center">
+          <LoadingSpinner size={40} />
+          {/* <p className="text-gray-500">Loading games...</p> */}
+        </div>
       )}
-
       {error && <p className="text-center text-red-500 text-lg">{error}</p>}
 
       {!loading && !error && (

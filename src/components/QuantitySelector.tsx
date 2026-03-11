@@ -1,8 +1,9 @@
-import { useState } from "react";
+interface Props {
+  quantity: number;
+  setQuantity: React.Dispatch<React.SetStateAction<number>>;
+}
 
-export default function QuantitySelector() {
-  const [quantity, setQuantity] = useState(1);
-
+export default function QuantitySelector({ quantity, setQuantity }: Props) {
   function increase() {
     setQuantity((q) => q + 1);
   }

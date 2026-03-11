@@ -7,6 +7,7 @@ export interface Game {
   platform_display: string;
   cover: string;
   created_at: string;
+  stock: number;
 }
 
 export interface CartItem {

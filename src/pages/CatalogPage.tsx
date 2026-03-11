@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import type { Game } from "../types/games";
 import { getGames } from "../services/games";
 import LoadingSpinner from "../components/LoadingSpinner";
+import { Link } from "react-router-dom";
 
 const CatalogPage: React.FC = () => {
   const [games, setGames] = useState<Game[]>([]);
@@ -113,30 +114,40 @@ const CatalogPage: React.FC = () => {
             ).href;
 
             return (
-              <div
-                key={game.id}
-                className="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden"
-              >
-                <img
-                  src={coverSrc}
-                  alt={game.title}
-                  className="w-full h-48 object-cover"
-                />
-                <div className="p-4">
-                  <h3 className="text-lg font-semibold text-gray-900">
-                    {game.title}
-                  </h3>
-                  <p className="text-sm text-gray-600">
-                    {game.platform_display}
-                  </p>
-                  <p className="text-[#12a176] font-bold mt-2">
-                    $ {Number(game.price).toFixed(2)}
-                  </p>
-                  <button className="mt-3 w-full bg-[#22d3ee] text-white py-2 rounded-lg font-medium hover:bg-[#1fb8d3] transition-colors">
-                    Add to cart
-                  </button>
+              <Link key={game.id} to={`/games/${game.id}`} className="block">
+                <div className="bg-white rounded-xl shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden cursor-pointer">
+                  <img
+                    src={coverSrc}
+                    alt={game.title}
+                    className="w-full h-48 object-cover"
+                  />
+
+                  <div className="p-4">
+                    <h3 className="text-lg font-semibold text-gray-900">
+                      {game.title}
+                    </h3>
+
+                    <p className="text-sm text-gray-600">
+                      {game.platform_display}
+                    </p>
+
+                    <p className="text-[#12a176] font-bold mt-2">
+                      $ {Number(game.price).toFixed(2)}
+                    </p>
+
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        console.log("Add to cart", game.id);
+                      }}
+                      className="mt-3 w-full bg-[#22d3ee] text-white py-2 rounded-lg font-medium hover:bg-[#1fb8d3] transition-colors duration-300 cursor-pointer"
+                    >
+                      Add to cart
+                    </button>
+                  </div>
                 </div>
-              </div>
+              </Link>
             );
           })}
         </div>

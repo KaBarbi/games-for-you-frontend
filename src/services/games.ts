@@ -22,3 +22,8 @@ export const getGames = async (): Promise<Game[]> => {
 
   return allGames;
 };
+
+export const getGameById = async (id: number): Promise<Game> => {
+  const res: AxiosResponse<Game> = await api.get(`games/${id}/`);
+  return res.data;
+};

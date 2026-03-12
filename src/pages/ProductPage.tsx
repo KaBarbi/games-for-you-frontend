@@ -50,7 +50,7 @@ export default function ProductPage() {
       <div className="max-w-6xl mx-auto">
         <button
           onClick={() => navigate(-1)}
-          className="mb-6 text-gray-600 hover:text-black flex items-center gap-2"
+          className="mb-6 text-gray-600 hover:text-black flex items-center gap-2 mt-4 md:mt-0"
         >
           ← Go Back
         </button>

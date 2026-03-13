@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getGameById } from "../services/games";
@@ -21,8 +20,11 @@ export default function ProductPage() {
       try {
         if (!id) return;
 
+        setLoading(true);
+
         const data = await getGameById(Number(id));
         setGame(data);
+        setError(null);
       } catch {
         setError("Failed to load game");
       } finally {
@@ -31,7 +33,7 @@ export default function ProductPage() {
     };
 
     loadGame();
-  }, []);
+  }, [id]);
 
   if (loading)
     return (

@@ -4,12 +4,15 @@ import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import "./index.css";
 import { AuthProvider } from "./contexts/AuthContext";
+import { GamesProvider } from "./contexts/GamesContext";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter>
       <AuthProvider>
-        <App />
+        <GamesProvider>
+          <App />
+        </GamesProvider>
       </AuthProvider>
     </BrowserRouter>
   </StrictMode>,

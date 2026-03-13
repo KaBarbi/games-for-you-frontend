@@ -1,40 +1,15 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { useEffect, useState } from "react";
 import GameBanner from "../components/GameBanner";
-import { getGames } from "../services/games";
 import ConstructionAlert from "../components/ConstructionAlert";
-import type { Game } from "../types/games";
 import LoadingSpinner from "../components/LoadingSpinner";
 import { Link } from "react-router";
+import { useGames } from "../contexts/GamesContext";
 
 const HomePage = () => {
-  const [games, setGames] = useState<Game[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const { games, loading, error } = useGames();
 
-  // ids of the games you want to feature
   const FEATURED_IDS = [2, 7, 11, 9];
 
-  useEffect(() => {
-    const loadGames = async () => {
-      try {
-        const gamesData = await getGames();
-
-        const filtered = gamesData.filter((game) =>
-          FEATURED_IDS.includes(game.id),
-        );
-
-        setGames(filtered);
-      } catch (err) {
-        setError("Failed to load games");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadGames();
-  }, []);
+  const featuredGames = games.filter((game) => FEATURED_IDS.includes(game.id));
 
   return (
     <div className="bg-[#f9f9fb] min-h-screen">
@@ -47,16 +22,16 @@ const HomePage = () => {
         </h2>
 
         {loading && (
-          <div className="items-center">
+          <div className="flex justify-center">
             <LoadingSpinner size={40} />
-            {/* <p className="text-gray-500">Loading games...</p> */}
           </div>
         )}
-        {error && <p className="text-center text-red-500 mt-8">{error}</p>}
 
-        {!loading && !error && (
+        {error && <p className="text-center text-red-500 text-lg">{error}</p>}
+
+        {!loading && (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
-            {games.map((game) => {
+            {featuredGames.map((game) => {
               const coverSrc = new URL(
                 `../assets/covers/${game.cover}`,
                 import.meta.url,

@@ -12,25 +12,25 @@ import type { Game } from "../types/games";
 interface GamesContextType {
   games: Game[];
   loading: boolean;
+  error: string | null;
+  getGameById: (id: number) => Game | undefined;
 }
 
-const GamesContext = createContext<GamesContextType>({
-  games: [],
-  loading: true,
-});
+const GamesContext = createContext<GamesContextType | undefined>(undefined);
 
 export const GamesProvider = ({ children }: { children: ReactNode }) => {
   const [games, setGames] = useState<Game[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const loadGames = async () => {
       try {
         const data = await getGames();
         setGames(data);
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      } catch (error) {
-        console.error("Failed to load games");
+      } catch (err) {
+        console.error(err);
+        setError("Failed to load games");
       } finally {
         setLoading(false);
       }
@@ -39,11 +39,30 @@ export const GamesProvider = ({ children }: { children: ReactNode }) => {
     loadGames();
   }, []);
 
+  const getGameById = (id: number) => {
+    return games.find((game) => game.id === id);
+  };
+
   return (
-    <GamesContext.Provider value={{ games, loading }}>
+    <GamesContext.Provider
+      value={{
+        games,
+        loading,
+        error,
+        getGameById,
+      }}
+    >
       {children}
     </GamesContext.Provider>
   );
 };
 
-export const useGames = () => useContext(GamesContext);
+export const useGames = () => {
+  const context = useContext(GamesContext);
+
+  if (!context) {
+    throw new Error("useGames must be used inside GamesProvider");
+  }
+
+  return context;
+};

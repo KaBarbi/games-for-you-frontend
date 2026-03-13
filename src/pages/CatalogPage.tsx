@@ -1,38 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useState, useEffect } from "react";
-import type { Game } from "../types/games";
-import { getGames } from "../services/games";
+import React, { useState } from "react";
+import { useGames } from "../contexts/GamesContext";
 import LoadingSpinner from "../components/LoadingSpinner";
 import { Link } from "react-router-dom";
 
 const CatalogPage: React.FC = () => {
-  const [games, setGames] = useState<Game[]>([]);
+  const { games, loading, error } = useGames();
+
   const [search, setSearch] = useState("");
   const [platformFilter, setPlatformFilter] = useState<
     "All" | "PlayStation" | "Xbox" | "Nintendo Switch"
   >("All");
+
   const [sort, setSort] = useState<"Name" | "Lowest Price" | "Highest Price">(
     "Name",
   );
-
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const loadGames = async () => {
-      try {
-        const gamesData = await getGames();
-        setGames(gamesData);
-      } catch (err) {
-        setError("Failed to load games");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadGames();
-  }, []);
 
   const filteredGames = games
     .filter(
@@ -61,6 +43,7 @@ const CatalogPage: React.FC = () => {
         <div className="flex flex-col md:flex-row justify-between gap-4">
           <div className="flex gap-2 flex-wrap">
             <span className="font-semibold mr-2">Platform:</span>
+
             {["All", "PlayStation", "Xbox", "Nintendo Switch"].map(
               (platform) => (
                 <button
@@ -80,6 +63,7 @@ const CatalogPage: React.FC = () => {
 
           <div className="flex gap-2 flex-wrap">
             <span className="font-semibold mr-2">Sort by:</span>
+
             {["Name", "Lowest Price", "Highest Price"].map((option) => (
               <button
                 key={option}
@@ -98,11 +82,11 @@ const CatalogPage: React.FC = () => {
       </div>
 
       {loading && (
-        <div className="items-center">
+        <div className="flex justify-center">
           <LoadingSpinner size={40} />
-          {/* <p className="text-gray-500">Loading games...</p> */}
         </div>
       )}
+
       {error && <p className="text-center text-red-500 text-lg">{error}</p>}
 
       {!loading && !error && (

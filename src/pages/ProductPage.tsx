@@ -1,39 +1,15 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { getGameById } from "../services/games";
-import type { Game } from "../types/games";
+import { useParams, useNavigate } from "react-router-dom";
+import { useGames } from "../contexts/GamesContext";
 import ProductDetails from "../components/ProductDetails";
 import LoadingSpinner from "../components/LoadingSpinner";
-import { useNavigate } from "react-router-dom";
 
 export default function ProductPage() {
   const navigate = useNavigate();
-
   const { id } = useParams();
 
-  const [game, setGame] = useState<Game | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const { getGameById, loading, error } = useGames();
 
-  useEffect(() => {
-    const loadGame = async () => {
-      try {
-        if (!id) return;
-
-        setLoading(true);
-
-        const data = await getGameById(Number(id));
-        setGame(data);
-        setError(null);
-      } catch {
-        setError("Failed to load game");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadGame();
-  }, [id]);
+  const game = id ? getGameById(Number(id)) : undefined;
 
   if (loading)
     return (
@@ -43,10 +19,13 @@ export default function ProductPage() {
     );
 
   if (error) return <p className="text-red-500 text-center">{error}</p>;
-  if (!game) return null;
+
+  if (!game)
+    return <p className="text-center text-red-500 mt-20">Game not found</p>;
 
   const coverSrc = new URL(`../assets/covers/${game.cover}`, import.meta.url)
     .href;
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="max-w-6xl mx-auto">

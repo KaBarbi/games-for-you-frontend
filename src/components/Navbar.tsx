@@ -103,7 +103,7 @@ export function Navbar(): JSX.Element {
         </Link>
 
         {/* USER MENU */}
-        <div className="relative">
+        <div className="relative mt-1.5">
           <button
             onClick={() => setUserMenuOpen((v) => !v)}
             className="hover:text-[#22d3ee]"

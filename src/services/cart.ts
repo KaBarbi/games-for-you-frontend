@@ -1,15 +1,34 @@
 import { api } from "./api";
-import type { Cart, CartItem } from "../types/games";
+import type { Cart } from "../types/games";
 
+// get cart
 export const getCart = async (): Promise<Cart> => {
-  const res = await api.get("carts/");
-  return res.data[0];
+  const res = await api.get("/cart/");
+  return res.data;
 };
 
+// add item
 export const addItemToCart = async (
-  gameId: number,
+  productId: number,
   quantity: number = 1,
-): Promise<CartItem> => {
-  const res = await api.post("cart-items/", { game_id: gameId, quantity });
-  return res.data;
+) => {
+  return api.post("/cart/add_item/", {
+    product: productId,
+    quantity,
+  });
+};
+
+// att quant
+export const updateCartItem = async (itemId: number, quantity: number) => {
+  return api.patch("/cart/update_item/", {
+    item_id: itemId,
+    quantity,
+  });
+};
+
+// remove item
+export const removeCartItem = async (itemId: number) => {
+  return api.delete("/cart/remove_item/", {
+    data: { item_id: itemId },
+  });
 };

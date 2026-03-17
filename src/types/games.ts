@@ -18,5 +18,6 @@ export interface CartItem {
 
 export interface Cart {
   id: number;
+  active: boolean;
   items: CartItem[];
 }

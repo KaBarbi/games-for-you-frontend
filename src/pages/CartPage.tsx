@@ -1,7 +1,7 @@
 import React from "react";
 import { FaArrowLeft } from "react-icons/fa";
 
-const EmptyCart: React.FC = () => {
+const CartPage: React.FC = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 text-center px-4">
       <div className="flex flex-col items-center gap-4">
@@ -28,4 +28,4 @@ const EmptyCart: React.FC = () => {
   );
 };
 
-export default EmptyCart;
+export default CartPage;

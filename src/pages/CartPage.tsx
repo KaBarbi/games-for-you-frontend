@@ -22,7 +22,13 @@ export default function CartPage() {
       setState({ status: "loading" });
 
       const cart = await getCart();
-      setItems(cart.items ?? []);
+
+      // 🔥 proteção contra resposta inesperada
+      if (!cart || !Array.isArray(cart.items)) {
+        setItems([]);
+      } else {
+        setItems(cart.items);
+      }
 
       setState({ status: "ready" });
     } catch (err: any) {
@@ -48,8 +54,12 @@ export default function CartPage() {
   async function handleIncrease(item: CartItem) {
     try {
       setBusyItemId(item.id);
+
       await updateCartItem(item.id, item.quantity + 1);
-      await load(); // 🔥 mantém consistência com backend
+
+      await load(); // mantém consistência com backend
+    } catch {
+      alert("Failed to update quantity.");
     } finally {
       setBusyItemId(null);
     }
@@ -60,8 +70,12 @@ export default function CartPage() {
 
     try {
       setBusyItemId(item.id);
+
       await updateCartItem(item.id, item.quantity - 1);
+
       await load();
+    } catch {
+      alert("Failed to update quantity.");
     } finally {
       setBusyItemId(null);
     }
@@ -70,8 +84,12 @@ export default function CartPage() {
   async function handleRemove(itemId: number) {
     try {
       setBusyItemId(itemId);
+
       await removeCartItem(itemId);
+
       await load();
+    } catch {
+      alert("Failed to remove item.");
     } finally {
       setBusyItemId(null);
     }
@@ -131,16 +149,18 @@ export default function CartPage() {
                 className="bg-white rounded-xl border border-gray-200 p-4 flex items-center justify-between gap-4"
               >
                 <div className="min-w-0">
-                  <div className="font-semibold truncate">{game.title}</div>
+                  <div className="font-semibold truncate">
+                    {game?.title ?? "Unknown"}
+                  </div>
 
                   <div className="text-xs text-gray-500">
-                    {game.platform_display}
+                    {game?.platform_display ?? "-"}
                   </div>
 
                   <div className="text-sm mt-1">
                     <span className="text-gray-500">Price:</span>{" "}
                     <span className="font-semibold">
-                      $ {game.price.toFixed(2)}
+                      $ {(game?.price ?? 0).toFixed(2)}
                     </span>
                   </div>
                 </div>

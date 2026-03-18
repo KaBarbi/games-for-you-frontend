@@ -8,12 +8,9 @@ export const getCart = async (): Promise<Cart> => {
 };
 
 // add item
-export const addItemToCart = async (
-  productId: number,
-  quantity: number = 1,
-) => {
+export const addItemToCart = async (gameId: number, quantity: number = 1) => {
   return api.post("/cart/add_item/", {
-    product: productId,
+    game: gameId,
     quantity,
   });
 };
@@ -28,7 +25,7 @@ export const updateCartItem = async (itemId: number, quantity: number) => {
 
 // remove item
 export const removeCartItem = async (itemId: number) => {
-  return api.delete("/cart/remove_item/", {
-    data: { item_id: itemId },
+  return api.post("/cart/remove_item/", {
+    item_id: itemId,
   });
 };

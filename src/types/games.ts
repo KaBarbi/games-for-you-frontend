@@ -10,14 +10,18 @@ export interface Game {
   stock: number;
 }
 
+export type GameSummary = Pick<
+  Game,
+  "id" | "title" | "price" | "platform" | "platform_display" | "cover"
+>;
+
 export interface CartItem {
   id: number;
-  game: Game;
   quantity: number;
+  game: GameSummary;
 }
 
 export interface Cart {
   id: number;
-  active: boolean;
   items: CartItem[];
 }
